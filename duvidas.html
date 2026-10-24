@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dúvidas Frequentes (FAQ) — WebCraft</title>
+  <meta name="description" content="Tire todas as suas dúvidas sobre prazos, domínio, hospedagem, pagamentos e suporte para a criação do seu site na WebCraft.">
+  <meta name="keywords" content="dúvidas criação de site, faq webcraft, prazos site, hospedagem site, formas de pagamento">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dúvidas Frequentes (FAQ) — WebCraft">
+  <meta property="og:description" content="Tudo o que você precisa saber antes de criar seu site sob medida na WebCraft.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80">
+  <meta name="theme-color" content="#0F172A">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234F46E5'/%3E%3Cpath d='M8 11L13 16L8 21M17 21H24' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. HEADER / NAVEGAÇÃO
+       ======================================================================== -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        Web<span>Craft</span>
+      </a>
+
+      <!-- Menu Desktop -->
+      <nav class="nav-desktop">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="index.html#como-funciona" class="nav-link">Como Funciona</a>
+        <a href="calculadora.html" class="nav-link">Calculadora & Planos</a>
+        <a href="duvidas.html" class="nav-link active">Dúvidas</a>
+      </nav>
+
+      <div class="header-cta">
+        <a href="calculadora.html" class="btn btn-primary btn-sm">
+          <span>Montar Meu Site</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <!-- Botão Toggle Mobile -->
+        <button class="mobile-toggle" aria-label="Abrir menu de navegação">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu Mobile Desdobrável -->
+  <div class="nav-mobile">
+    <a href="index.html" class="nav-link">Início</a>
+    <a href="index.html#como-funciona" class="nav-link">Como Funciona</a>
+    <a href="calculadora.html" class="nav-link">Calculadora & Planos</a>
+    <a href="duvidas.html" class="nav-link active">Dúvidas Frequentes</a>
+    <a href="calculadora.html" class="btn btn-primary btn-block">Montar Meu Site</a>
+  </div>
+
+  <!-- ========================================================================
+       2. HERO DA PÁGINA DE DÚVIDAS
+       ======================================================================== -->
+  <section class="subpage-hero">
+    <div class="container">
+      <div class="subpage-hero-content">
+        <span class="badge badge-indigo">
+          <i class="fa-solid fa-circle-question"></i> Central de Ajuda & Transparência
+        </span>
+        <h1 class="subpage-title">Perguntas Frequentes (FAQ)</h1>
+        <p class="subpage-subtitle">
+          Reunimos aqui as dúvidas mais comuns dos nossos clientes sobre criação de sites, prazos de entrega, domínio, pagamentos e hospedagem.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. CONTROLES DE BUSCA E FILTROS DE CATEGORIA
+       ======================================================================== -->
+  <section class="section" style="padding-top: 10px; padding-bottom: 90px;">
+    <div class="container">
+      
+      <div class="faq-controls">
+        <!-- Campo de Busca em Tempo Real -->
+        <div class="faq-search-box">
+          <i class="fa-solid fa-magnifying-glass faq-search-icon"></i>
+          <input type="text" id="faq-search-input" class="faq-search-input" placeholder="Pesquisar dúvida (ex: prazo, pagamento, domínio, alterações)...">
+        </div>
+
+        <!-- Filtros por Categoria -->
+        <div class="faq-filter-pills">
+          <button type="button" class="faq-filter-btn active" data-category="todos">Todas as Dúvidas</button>
+          <button type="button" class="faq-filter-btn" data-category="prazos">Prazos & Criação</button>
+          <button type="button" class="faq-filter-btn" data-category="dominio">Domínio & Hospedagem</button>
+          <button type="button" class="faq-filter-btn" data-category="pagamentos">Pagamentos & Preços</button>
+          <button type="button" class="faq-filter-btn" data-category="suporte">Alterações & Suporte</button>
+        </div>
+      </div>
+
+      <!-- Container das Perguntas em Acordeão -->
+      <div class="faq-container">
+
+        <!-- CATEGORIA 1: PRAZOS E CRIAÇÃO -->
+        <div class="faq-category-header" data-category="prazos">
+          <i class="fa-solid fa-clock"></i>
+          <h3>Prazos e Processo de Criação</h3>
+        </div>
+
+        <!-- Pergunta 1 -->
+        <div class="faq-item" data-category="prazos">
+          <button class="faq-question">
+            <span>Quanto tempo leva para o meu site ficar pronto?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>O prazo padrão para o <strong>Site Express (One-Page)</strong> é de <strong>5 a 7 dias úteis</strong> após o alinhamento inicial e envio dos materiais. Para o <strong>Site Institucional Multipáginas</strong>, o prazo médio é de <strong>10 a 15 dias úteis</strong>. Nosso fluxo de trabalho é otimizado para entregar rápido sem perder qualidade.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 2 -->
+        <div class="faq-item" data-category="prazos">
+          <button class="faq-question">
+            <span>Como vocês recebem o material e os textos da minha empresa?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Após fechar o orçamento pelo WhatsApp, enviamos um formulário de briefing super descomplicado. Você pode nos enviar fotos, logomarca e textos pelo WhatsApp ou através de uma pasta compartilhada no Google Drive. Se você não tiver os textos prontos, nossa equipe te orienta a estruturá-los.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 3 -->
+        <div class="faq-item" data-category="prazos">
+          <button class="faq-question">
+            <span>E se a minha empresa não tiver fotos profissionais ou logotipo em vetor?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Não se preocupe! Nós selecionamos e licenciamos fotografias em alta resolução de bancos de imagens profissionais que combinem perfeitamente com seu segmento. Caso precise de pequenos ajustes no seu logotipo atual, também cuidamos disso.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 4 -->
+        <div class="faq-item" data-category="prazos">
+          <button class="faq-question">
+            <span>Quantas rodadas de alterações posso solicitar antes da entrega final?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Apresentamos uma versão de prévia do site no nosso servidor de testes. Você tem total liberdade para solicitar ajustes visuais, mudanças de textos, cores ou posições até que o projeto esteja 100% de acordo com suas expectativas antes de ser publicado oficialmente.</p>
+          </div>
+        </div>
+
+        <!-- CATEGORIA 2: DOMÍNIO E HOSPEDAGEM -->
+        <div class="faq-category-header" data-category="dominio">
+          <i class="fa-solid fa-server"></i>
+          <h3>Domínio, Hospedagem e Segurança</h3>
+        </div>
+
+        <!-- Pergunta 5 -->
+        <div class="faq-item" data-category="dominio">
+          <button class="faq-question">
+            <span>O domínio (ex: meunegocio.com.br) já está incluso?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Se você já possui um domínio registrado, realizamos todo o apontamento de DNS e configuração técnica gratuitamente. Se ainda não possui, você pode marcar a opção <strong>"Registro de Domínio por 1 Ano" (R$ 60)</strong> na calculadora que nós cuidamos do registro oficial em seu nome/CNPJ.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 6 -->
+        <div class="faq-item" data-category="dominio">
+          <button class="faq-question">
+            <span>A assinatura de manutenção e hospedagem mensal é obrigatória?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Todo site na internet requer uma infraestrutura de hospedagem conectada 24 horas por dia e certificado de segurança SSL renovado. Nossos planos de manutenção já integram servidores Cloud NVMe, backups automáticos e suporte contínuo. Caso sua empresa já conte com uma equipe de TI e servidor próprio dedicado, podemos realizar a entrega do código-fonte mediante alinhamento prévio.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 7 -->
+        <div class="faq-item" data-category="dominio">
+          <button class="faq-question">
+            <span>O que acontece se eu quiser transferir meu site para outro servidor no futuro?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Na WebCraft você é dono do seu site! Não prendemos clientes através de fidelidade forçada. Se um dia desejar migrar para outro servidor, disponibilizamos todos os arquivos, bancos de dados e instruções de instalação sem complicações.</p>
+          </div>
+        </div>
+
+        <!-- CATEGORIA 3: PAGAMENTOS E PREÇOS -->
+        <div class="faq-category-header" data-category="pagamentos">
+          <i class="fa-regular fa-credit-card"></i>
+          <h3>Pagamentos, Valores e Parcelamento</h3>
+        </div>
+
+        <!-- Pergunta 8 -->
+        <div class="faq-item" data-category="pagamentos">
+          <button class="faq-question">
+            <span>Como funcionam as formas de pagamento do desenvolvimento?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Oferecemos duas modalidades principais:
+              <br>• <strong>À vista via Pix:</strong> 50% de entrada no início do projeto e os 50% restantes somente após a aprovação e publicação do site.
+              <br>• <strong>Cartão de Crédito:</strong> Parcelamento do valor integral em até <strong>12 vezes no cartão</strong> com liberação imediata.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pergunta 9 -->
+        <div class="faq-item" data-category="pagamentos">
+          <button class="faq-question">
+            <span>O valor calculado na calculadora é exatamente o que vou pagar?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p><strong>Sim, 100% transparente!</strong> Não cobramos taxas ocultas, custos surpresa ou adicionais imprevistos. O valor apresentado no card de resumo é o investimento exato do seu projeto conforme os módulos que você escolheu.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 10 -->
+        <div class="faq-item" data-category="pagamentos">
+          <button class="faq-question">
+            <span>Posso pagar parcelado em mais de um cartão de crédito?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Sim! Nosso link de pagamento oficial via gateway seguro permite dividir o valor total entre dois cartões de crédito diferentes caso você precise otimizar seu limite.</p>
+          </div>
+        </div>
+
+        <!-- CATEGORIA 4: ALTERAÇÕES E SUPORTE -->
+        <div class="faq-category-header" data-category="suporte">
+          <i class="fa-solid fa-headset"></i>
+          <h3>Alterações, Manutenção e Escalabilidade</h3>
+        </div>
+
+        <!-- Pergunta 11 -->
+        <div class="faq-item" data-category="suporte">
+          <button class="faq-question">
+            <span>Eu mesmo poderei editar textos, fotos e produtos no futuro?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Sim! Entregamos orientações práticas para sua equipe realizar edições pontuais. Além disso, se você optar pelo nosso <strong>Plano Pro</strong> ou <strong>Premium</strong> de manutenção, você nem precisa gastar seu tempo: basta nos enviar o que quer trocar pelo WhatsApp que nossa equipe faz para você.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 12 -->
+        <div class="faq-item" data-category="suporte">
+          <button class="faq-question">
+            <span>Posso adicionar novos módulos ou páginas extras depois que o site estiver no ar?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Com certeza. Nossos sites são construídos com tecnologia modular e código escalável. Se no futuro sua empresa quiser integrar um sistema de agendamento, criar um blog ou catálogo completo, implementamos de forma fluida sem precisar refazer o site do zero.</p>
+          </div>
+        </div>
+
+        <!-- Pergunta 13 -->
+        <div class="faq-item" data-category="suporte">
+          <button class="faq-question">
+            <span>Meu site vai aparecer na primeira página do Google?</span>
+            <div class="faq-toggle-icon">
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+          </button>
+          <div class="faq-answer">
+            <p>Todos os nossos projetos são desenvolvidos seguindo as melhores práticas do Google (SEO técnico on-page): velocidade máxima, carregamento para mobile, meta tags e indexação imediata no Google Search Console. Para palavras-chave ultra concorridas, recomendamos contratar o módulo de <em>Otimização SEO Local</em> e manter publicações regulares no Blog.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SEÇÃO: AINDA COM DÚVIDAS? CANAIS DIRETOS -->
+      <div style="margin-top: 80px; text-align: center;">
+        <span class="badge badge-emerald">Atendimento Especializado</span>
+        <h2 style="font-family: var(--font-heading); font-size: 2rem; color: var(--primary-900); margin: 12px 0 16px 0;">
+          Não encontrou o que procurava?
+        </h2>
+        <p style="color: var(--primary-600); max-width: 600px; margin: 0 auto 36px auto;">
+          Nossa equipe está disponível em horário comercial para tirar qualquer dúvida específica do seu segmento.
+        </p>
+
+        <div class="help-cards-grid">
+          <!-- Card 1: WhatsApp -->
+          <div class="help-card">
+            <div class="help-icon-circle whatsapp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <h4>Conversar no WhatsApp</h4>
+            <p>Fale diretamente com um especialista técnico em tempo real. Resposta média em 15 minutos.</p>
+            <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-whatsapp btn-block">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Abrir WhatsApp</span>
+            </a>
+          </div>
+
+          <!-- Card 2: Calculadora -->
+          <div class="help-card">
+            <div class="help-icon-circle email">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h4>Montar Orçamento</h4>
+            <p>Descubra os valores exatos selecionando os módulos que seu negócio precisa agora.</p>
+            <a href="calculadora.html" class="btn btn-primary btn-block">
+              <span>Ir para a Calculadora</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Card 3: E-mail -->
+          <div class="help-card">
+            <div class="help-icon-circle calendar">
+              <i class="fa-regular fa-envelope"></i>
+            </div>
+            <h4>Enviar E-mail</h4>
+            <p>Precisa de uma proposta personalizada para licitação ou empresa de grande porte?</p>
+            <a href="mailto:contato@webcraft.com.br" class="btn btn-secondary btn-block">
+              <i class="fa-regular fa-envelope"></i>
+              <span>contato@webcraft.com.br</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       4. RODAPÉ (FOOTER)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Coluna Marca -->
+        <div class="footer-col-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            Web<span>Craft</span>
+          </a>
+          <p>
+            Agência especializada em desenvolvimento de sites sob medida, landing pages de alta conversão e presença digital de alto impacto para empresas e profissionais.
+          </p>
+          <div class="footer-social-links">
+            <a href="#" class="social-link-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="social-link-btn" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+        <!-- Coluna Links Rápidos -->
+        <div>
+          <h4 class="footer-heading">Navegação</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#como-funciona">Como Funciona</a></li>
+            <li><a href="calculadora.html">Calculadora de Preço</a></li>
+            <li><a href="calculadora.html#planos">Planos de Hospedagem</a></li>
+            <li><a href="duvidas.html">Perguntas Frequentes (FAQ)</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna Serviços -->
+        <div>
+          <h4 class="footer-heading">Soluções</h4>
+          <ul class="footer-links">
+            <li><a href="calculadora.html">Landing Pages One-Page</a></li>
+            <li><a href="calculadora.html">Sites Institucionais</a></li>
+            <li><a href="calculadora.html">Otimização SEO Local</a></li>
+            <li><a href="calculadora.html">Catálogo de Produtos</a></li>
+            <li><a href="calculadora.html#planos">Manutenção & Cloud SSL</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna Contato & Atendimento -->
+        <div>
+          <h4 class="footer-heading">Atendimento</h4>
+          <div class="footer-contact-info">
+            <div class="contact-info-row">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>(11) 99999-9999</span>
+            </div>
+            <div class="contact-info-row">
+              <i class="fa-regular fa-envelope"></i>
+              <span>contato@webcraft.com.br</span>
+            </div>
+            <div class="contact-info-row">
+              <i class="fa-regular fa-clock"></i>
+              <span>Seg a Sex: 09:00 às 18:00</span>
+            </div>
+            <div class="contact-info-row">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Atendimento em todo o Brasil</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rodapé Inferior -->
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 <strong>WebCraft</strong> — Criação de Sites Sob Medida. Todos os direitos reservados.
+        </div>
+        <div class="footer-bottom-links">
+          <span>Privacidade & Termos</span>
+          <span>•</span>
+          <span>Pagamentos em até 12x</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       5. BOTÃO FLUTUANTE DO WHATSAPP & TOAST
+       ======================================================================== -->
+  <a href="https://wa.me/5511999999999" target="_blank" class="floating-whatsapp-btn" aria-label="Fale conosco no WhatsApp" title="Falar no WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+    <span class="floating-whatsapp-badge"></span>
+  </a>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>

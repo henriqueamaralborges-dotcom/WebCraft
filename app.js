@@ -167,6 +167,9 @@ function calculateTotals() {
 }
 
 function updateUI() {
+  const calcContainer = document.querySelector('.calculator-section');
+  if (!calcContainer) return; // Se a página atual não tiver calculadora, encerra silenciosamente
+
   const totals = calculateTotals();
 
   // 1. Atualiza os cards visuais de rádio da Base
@@ -321,8 +324,7 @@ function setupCalculatorEvents() {
 
   // Clique nos Módulos Opcionais normais
   document.querySelectorAll('.module-card[data-module]').forEach((card) => {
-    card.addEventListener('click', (e) => {
-      // Se clicou no checkbox, deixa o evento propagar ou trata
+    card.addEventListener('click', () => {
       const modKey = card.getAttribute('data-module');
       if (!modKey) return;
 
@@ -363,7 +365,6 @@ function setupCalculatorEvents() {
   // Clique no card de Páginas Extras
   if (extraPagesCard) {
     extraPagesCard.addEventListener('click', (e) => {
-      // Se não clicou nos botões de soma/subtração
       if (!e.target.closest('.counter-btn')) {
         if (state.extraPagesCount === 0) {
           state.extraPagesCount = 1;
@@ -395,7 +396,7 @@ function setupCalculatorEvents() {
         state.selectedMaintenance = planKey;
         updateUI();
 
-        // Rola até a calculadora
+        // Rola até a calculadora se estiver na página da calculadora
         const calcSection = document.getElementById('calculadora');
         if (calcSection) {
           calcSection.scrollIntoView({ behavior: 'smooth' });
@@ -415,6 +416,8 @@ function setupLeadForm() {
   const inputPhone = document.getElementById('lead-phone');
   const btnSendWhatsApp = document.getElementById('btn-send-whatsapp');
   const btnCopySummary = document.getElementById('btn-copy-summary');
+
+  if (!btnSendWhatsApp && !btnCopySummary) return;
 
   // Máscara e validação em tempo real do Telefone
   if (inputPhone) {
@@ -555,10 +558,11 @@ function generateWhatsAppMessage() {
 }
 
 // ==========================================================================
-// 8. FAQ Accordion
+// 8. FAQ Accordion & Busca / Filtros
 // ==========================================================================
 function setupFAQ() {
   const faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length === 0) return;
 
   faqItems.forEach((item) => {
     const questionBtn = item.querySelector('.faq-question');
@@ -568,7 +572,7 @@ function setupFAQ() {
       questionBtn.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
 
-        // Fecha todos os outros itens
+        // Fecha todos os outros itens da mesma categoria
         faqItems.forEach((other) => {
           if (other !== item) {
             other.classList.remove('active');
@@ -587,6 +591,55 @@ function setupFAQ() {
         }
       });
     }
+  });
+
+  // Filtro de Busca em Tempo Real (se presente na página duvidas.html)
+  const searchInput = document.getElementById('faq-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+
+      faqItems.forEach((item) => {
+        const questionText = item.querySelector('.faq-question span')?.textContent.toLowerCase() || '';
+        const answerText = item.querySelector('.faq-answer')?.textContent.toLowerCase() || '';
+
+        if (questionText.includes(term) || answerText.includes(term)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  // Filtro de Categorias (Botões Pills)
+  const filterButtons = document.querySelectorAll('.faq-filter-btn');
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const targetCategory = btn.getAttribute('data-category');
+
+      faqItems.forEach((item) => {
+        const itemCategory = item.getAttribute('data-category');
+        if (targetCategory === 'todos' || itemCategory === targetCategory) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Também oculta ou exibe os títulos de categoria se existirem
+      document.querySelectorAll('.faq-category-header').forEach((catHeader) => {
+        const headerCat = catHeader.getAttribute('data-category');
+        if (targetCategory === 'todos' || headerCat === targetCategory) {
+          catHeader.style.display = 'flex';
+        } else {
+          catHeader.style.display = 'none';
+        }
+      });
+    });
   });
 }
 
@@ -657,11 +710,11 @@ function setupNavigation() {
     });
   }
 
-  // Smooth scroll com offset para links âncora
+  // Smooth scroll com offset apenas para âncoras locais na mesma página
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', function(e) {
       const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
+      if (targetId === '#' || targetId === '') return;
 
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
@@ -687,5 +740,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCalculatorEvents();
   setupLeadForm();
   setupFAQ();
-  updateUI(); // Primeira renderização com valores padrão
+  updateUI(); // Primeira renderização com valores padrão se a calculadora estiver presente
 });

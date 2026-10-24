@@ -396,7 +396,8 @@ ul {
   padding: 6px 0;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--indigo-600);
 }
 
@@ -411,7 +412,8 @@ ul {
   transition: width var(--transition-fast);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -2160,3 +2162,204 @@ ul {
     font-size: 1.85rem;
   }
 }
+
+/* --------------------------------------------------------------------------
+   17. Subpáginas Hero & Componentes Específicos
+   -------------------------------------------------------------------------- */
+.subpage-hero {
+  padding-top: 140px;
+  padding-bottom: 60px;
+  background: radial-gradient(circle at 50% 10%, rgba(99, 102, 241, 0.08) 0%, rgba(248, 250, 252, 0) 65%);
+  text-align: center;
+  position: relative;
+}
+
+.subpage-hero-content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.subpage-title {
+  font-family: var(--font-heading);
+  font-size: 2.85rem;
+  font-weight: 800;
+  color: var(--primary-900);
+  letter-spacing: -0.03em;
+  margin-top: 14px;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.subpage-subtitle {
+  font-size: 1.15rem;
+  color: var(--primary-600);
+  line-height: 1.6;
+}
+
+/* FAQ Search & Filter Controls */
+.faq-controls {
+  max-width: 650px;
+  margin: 0 auto 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.faq-search-box {
+  position: relative;
+  width: 100%;
+}
+
+.faq-search-input {
+  width: 100%;
+  padding: 16px 20px 16px 50px;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-full);
+  font-size: 0.975rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.faq-search-input:focus {
+  border-color: var(--indigo-600);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+.faq-search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-400);
+  font-size: 1.1rem;
+}
+
+.faq-filter-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.faq-filter-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.faq-filter-btn:hover {
+  border-color: var(--indigo-400);
+  color: var(--indigo-600);
+}
+
+.faq-filter-btn.active {
+  background-color: var(--indigo-600);
+  border-color: var(--indigo-600);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.faq-category-header {
+  margin: 36px 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-category-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary-900);
+}
+
+.faq-category-header i {
+  color: var(--indigo-600);
+  font-size: 1.15rem;
+}
+
+/* Help & Support Cards */
+.help-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.help-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 30px 24px;
+  text-align: center;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.help-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--indigo-400);
+  box-shadow: var(--shadow-lg);
+}
+
+.help-icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+}
+
+.help-icon-circle.whatsapp {
+  background-color: var(--emerald-50);
+  color: var(--emerald-600);
+}
+
+.help-icon-circle.email {
+  background-color: var(--indigo-50);
+  color: var(--indigo-600);
+}
+
+.help-icon-circle.calendar {
+  background-color: var(--cyan-50);
+  color: var(--cyan-600);
+}
+
+.help-card h4 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-900);
+  margin-bottom: 8px;
+}
+
+.help-card p {
+  font-size: 0.875rem;
+  color: var(--primary-600);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .subpage-title {
+    font-size: 2.25rem;
+  }
+  .help-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+

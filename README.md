@@ -1,74 +1,79 @@
-# 🚀 WebCraft — Landing Page com Calculadora Interativa de Orçamento
+# 🚀 WebCraft — Criação de Sites Sob Medida com Calculadora Interativa
 
-Landing page moderna, responsiva e de alta conversão desenvolvida para a agência **WebCraft**, especializada em criação de sites sob medida.
+Plataforma moderna, responsiva e de alta conversão desenvolvida para a agência **WebCraft**, especializada no desenvolvimento de sites personalizados, landing pages e soluções digitais de alto impacto.
 
-O diferencial central do projeto é uma **Calculadora Interativa em Tempo Real**, onde o cliente seleciona a estrutura do site, módulos adicionais e plano de hospedagem/manutenção, visualizando os valores de investimento inicial, parcelamento em até 12x e mensalidade na hora, com envio automatizado para o WhatsApp.
-
----
-
-## 🎨 Características Visuais e Tecnológicas
-
-- **Design Estilo SaaS:** Paleta profissional com fundo claro/cinza suave (`#F8FAFC`), Azul Escuro/Índigo (`#0F172A`, `#4F46E5`) e detalhes em Verde Esmeralda/Ciano (`#10B981`, `#06B6D4`) para CTAs e conversão.
-- **Tipografia Moderna:** Fontes *Plus Jakarta Sans* e *Inter* do Google Fonts.
-- **Totalmente Responsivo:** Desenvolvido no modelo mobile-first, com layout adaptável para smartphones, tablets, laptops e telas ultra-wide.
-- **Micro-interações:** Efeitos de elevação em cards, badges com animação de pulso, accordion com transição suave para o FAQ e menu hambúrguer animado.
-- **Zero Dependências Pesadas:** Desenvolvido em HTML5 semântico, CSS3 modular e JavaScript Vanilla nativo de altíssima velocidade.
+O projeto foi organizado com arquitetura **Multi-Páginas (MPA)** limpa e de alta performance, permitindo que cada área do site tenha seu próprio foco e facilidade de navegação para o cliente.
 
 ---
 
-## 📂 Estrutura de Arquivos
+## 📂 Estrutura de Páginas do Projeto
 
 ```text
 WebCraft/
-├── index.html       # Estrutura semântica de todas as seções e calculadora
-├── styles.css       # Design tokens, variáveis CSS, componentes e responsividade
-├── app.js           # Lógica reativa da calculadora, formatação BRL e WhatsApp
-└── README.md        # Documentação completa do projeto
+├── index.html         # Página 1: Início, Como Funciona, Diferenciais e Vitrine de Recursos
+├── calculadora.html   # Página 2: Calculadora Interativa em Tempo Real e Comparativo de Planos
+├── duvidas.html       # Página 3: Perguntas Frequentes (FAQ) com busca em tempo real e Canais de Suporte
+├── styles.css         # Design system completo estilo SaaS, variáveis CSS e responsividade mobile-first
+├── app.js             # Lógica reativa da calculadora, formatação BRL, validações e API do WhatsApp
+├── .gitignore         # Configurações de exclusão para arquivos temporários
+└── README.md          # Documentação do projeto
 ```
 
 ---
 
-## 🧮 Lógica e Regras da Calculadora
+## 📄 Detalhamento de Cada Página
 
-### A. Estrutura Base (Obrigatório 1 - Radio)
-- **Site Express / One-Page:** R$ 590,00 *(Página única com até 5 seções)*
-- **Site Institucional Multipáginas:** R$ 1.190,00 *(Até 4 páginas independentes)*
+### 1. `index.html` (Início & Como Funciona)
+- **Hero Section:** Headline de alto impacto ("Crie o site ideal para sua empresa pagando apenas pelo que precisa"), subtítulo persuasivo, prova social (+180 sites entregues, 4.9/5 estrelas) e mockup interativo de navegador com métricas de desempenho.
+- **Como Funciona:** Passo a passo em 3 etapas transparentes (1. Monte o pacote na calculadora -> 2. Veja o valor instantâneo -> 3. Receba seu site pronto).
+- **Diferenciais WebCraft:** 6 pilares de qualidade técnica (Mobile-first, Foco em Conversão, Propriedade Total, Velocidade Cloud NVMe, SEO Estruturado e Suporte Humano).
+- **Vitrine de Recursos:** Apresentação visual dos principais módulos integráveis.
+- **CTAs Magnéticos:** Botões estratégicos direcionando o usuário para montar o orçamento na calculadora.
 
-### B. Módulos Adicionais (Opcionais - Checkboxes)
-- **Páginas Extras:** R$ 150,00 cada *(com contador interativo `+` e `-`)*
-- **Criação de Blog / Notícias:** R$ 250,00
-- **Galeria / Portfólio Interativo:** R$ 120,00
-- **Botão Flutuante do WhatsApp:** R$ 50,00
-- **Formulário de Orçamento Completo:** R$ 100,00
-- **Sistema de Agendamento Online:** R$ 200,00
-- **Catálogo de Produtos:** R$ 300,00
-- **Otimização SEO Local:** R$ 200,00
-- **Instalação de Pixel de Anúncios:** R$ 100,00
-- **Registro de Domínio por 1 Ano:** R$ 60,00
+### 2. `calculadora.html` (Calculadora Interativa & Planos de Manutenção)
+- **Calculadora em Tempo Real (Duas Colunas no Desktop):**
+  - **Bloco A (Estrutura Base - Obrigatório 1):**
+    - Site Express / One-Page (R$ 590,00)
+    - Site Institucional Multipáginas (R$ 1.190,00)
+  - **Bloco B (Módulos Adicionais Opcionais):**
+    - Páginas Extras (R$ 150,00/cada com contador dinâmico `+` e `-`)
+    - Criação de Blog / Notícias (R$ 250,00)
+    - Galeria / Portfólio Interativo (R$ 120,00)
+    - Botão Flutuante do WhatsApp (R$ 50,00)
+    - Formulário de Orçamento Completo (R$ 100,00)
+    - Sistema de Agendamento Online (R$ 200,00)
+    - Catálogo de Produtos (R$ 300,00)
+    - Otimização SEO Local (R$ 200,00)
+    - Instalação de Pixel de Anúncios (R$ 100,00)
+    - Registro de Domínio por 1 Ano (R$ 60,00)
+  - **Bloco C (Plano de Manutenção Mensal - Obrigatório 1):**
+    - Plano Básico: R$ 49,00/mês
+    - Plano Pro: R$ 99,00/mês
+    - Plano Premium: R$ 149,00/mês
+  - **Card Lateral de Resumo Fixo (Sticky Sidebar):**
+    - Lista descritiva dos módulos ativos no momento.
+    - Total do Investimento Inicial e simulação de **parcelamento em até 12x no cartão**.
+    - Valor da Mensalidade de Hospedagem & Suporte.
+    - Formulário de contato rápido (Nome, Empresa e WhatsApp com máscara automática `(11) 99999-9999`).
+    - Botão **"Enviar Pedido via WhatsApp"**: Valida os campos e abre o WhatsApp com a mensagem estruturada.
+    - Botão **"Copiar Resumo"**: Copia o texto para a área de transferência com notificação Toast.
+- **Seção de Manutenção & Hospedagem:** Explicação detalhada sobre a necessidade de estabilidade e segurança com comparativo dos planos e botões de seleção rápida.
 
-### C. Plano de Manutenção & Hospedagem (Obrigatório 1 - Radio)
-- **Plano Básico:** R$ 49,00/mês *(Hospedagem Cloud NVMe + SSL)*
-- **Plano Pro:** R$ 99,00/mês *(Hospedagem + SSL + 1h de alterações/mês)*
-- **Plano Premium:** R$ 149,00/mês *(Hospedagem + SSL + Alterações + Suporte Prioritário)*
-
-### D. Card Lateral de Resumo (Sticky)
-- Atualização em tempo real do **Investimento Inicial de Criação** (Base + Adicionais).
-- Cálculo automático de **parcelamento em até 12x no cartão**.
-- Indicação do valor da **mensalidade de manutenção**.
-- Lista descritiva dos módulos ativos no momento.
-- Formulário de captura com validação: Nome, Empresa e WhatsApp (com máscara automática `(11) 99999-9999`).
-- Botão **"Enviar Pedido via WhatsApp"**: Abre a API oficial do WhatsApp (`https://wa.me/...`) com uma mensagem estruturada e pronta para o cliente iniciar o atendimento.
-- Botão **"Copiar Resumo"**: Copia todo o texto formatado para a área de transferência com notificação Toast.
+### 3. `duvidas.html` (Perguntas Frequentes & Central de Ajuda)
+- **Barra de Busca Instantânea:** Digite termos como "prazo", "domínio", "pagamento" e as dúvidas são filtradas em tempo real na tela.
+- **Filtros por Categoria:** Botões de filtro para *Prazos & Criação*, *Domínio & Hospedagem*, *Pagamentos & Preços* e *Alterações & Suporte*.
+- **Acordeão Suave:** Clique para expandir/recolher as dúvidas com animação fluida.
+- **Canais de Contato Direto:** 3 cards para falar no WhatsApp com especialista, ir para a calculadora ou enviar e-mail comercial.
 
 ---
 
 ## ⚙️ Como Configurar o Seu Número de WhatsApp
 
-Abra o arquivo [app.js](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/app.js) e altere a primeira linha de configuração:
+Abra o arquivo [app.js](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/app.js) e substitua o número da constante `CONFIG`:
 
 ```javascript
 const CONFIG = {
-  // Substitua pelo seu telefone com DDI (55 para Brasil) + DDD + Número:
+  // Coloque seu telefone com DDI (55 para Brasil) + DDD + Número sem espaços:
   whatsappPhone: "5511999999999", 
   currencyLocale: "pt-BR",
   currencyCode: "BRL",
@@ -76,48 +81,36 @@ const CONFIG = {
 };
 ```
 
-E no arquivo [index.html](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/index.html), atualize os links diretos para o WhatsApp no botão flutuante e no rodapé:
+E no botão flutuante e rodapé das páginas (`index.html`, `calculadora.html`, `duvidas.html`), atualize os links diretos para o WhatsApp:
 ```html
 <a href="https://wa.me/5511999999999" target="_blank" class="floating-whatsapp-btn">
 ```
 
 ---
 
-## 💻 Como Visualizar e Testar Localmente
+## 💻 Como Visualizar Localmente
 
-Como o projeto é construído em padrões web puros (HTML, CSS e JS), não é necessário instalar nenhum pacote npm:
+Não requer instalação de Node ou dependências externas pesadas:
+- Dê dois cliques em [**`index.html`**](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/index.html) para abrir no navegador padrão.
+- Ou execute um servidor local simples:
+  ```bash
+  # Via Python:
+  python -m http.server 8080
 
-1. **Opção 1:** Dê dois cliques no arquivo `index.html` para abrir diretamente no seu navegador padrão (Chrome, Edge, Firefox, Safari).
-2. **Opção 2 (Recomendada para desenvolvimento):** Abra a pasta no VS Code e utilize a extensão **Live Server** para recarregamento automático.
-3. **Opção 3 (Terminal):**
-   ```bash
-   # Com Python:
-   python -m http.server 8080
-
-   # Com Node.js / npx:
-   npx serve .
-   ```
+  # Via npx:
+  npx serve .
+  ```
 
 ---
 
-## 🌐 Publicação no GitHub Pages (Grátis)
+## 🌐 Publicação no GitHub Pages (100% Gratuito)
 
-Para colocar o site no ar gratuitamente em menos de 1 minuto:
-
-1. Faça o commit e push dos arquivos para o repositório no GitHub:
+1. Faça o commit e o envio dos arquivos:
    ```bash
    git add .
-   git commit -m "feat: landing page e calculadora interativa WebCraft"
+   git commit -m "feat: landing page multi-páginas e calculadora WebCraft"
    git push origin main
    ```
-2. No repositório no GitHub, clique na aba **Settings** (Configurações).
-3. No menu lateral esquerdo, clique em **Pages**.
-4. Em **Build and deployment > Branch**, selecione a branch `main` e a pasta `/(root)`.
-5. Clique em **Save**. Em instantes seu site estará disponível no endereço:
-   `https://henriqueamaralborges-dotcom.github.io/WebCraft-/`
-
----
-
-## 📄 Licença
-
-Desenvolvido para **WebCraft**. Todos os direitos reservados.
+2. No repositório no GitHub, abra **Settings** > **Pages**.
+3. Em **Branch**, selecione `main` e a pasta `/(root)`.
+4. Salve para gerar o link oficial do site.
