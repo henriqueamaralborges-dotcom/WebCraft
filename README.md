@@ -69,8 +69,8 @@ Abra o arquivo [app.js](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/app.js
 
 ```javascript
 const CONFIG = {
-  // Coloque seu telefone com DDI (55 para Brasil) + DDD + Número sem espaços:
-  whatsappPhone: "5511999999999", 
+  // Telefone oficial configurado: +55 11 97481-4897
+  whatsappPhone: "5511974814897", 
   currencyLocale: "pt-BR",
   currencyCode: "BRL",
   maxInstallments: 12

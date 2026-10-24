@@ -8,7 +8,7 @@
 // ==========================================================================
 const CONFIG = {
   // Número oficial do WhatsApp para receber orçamentos (DDI + DDD + Número sem traços)
-  whatsappPhone: "5511999999999", 
+  whatsappPhone: "5511974814897", 
   currencyLocale: "pt-BR",
   currencyCode: "BRL",
   maxInstallments: 12
