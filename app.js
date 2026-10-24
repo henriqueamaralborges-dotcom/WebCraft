@@ -168,7 +168,7 @@ function calculateTotals() {
 
 function updateUI() {
   const calcContainer = document.querySelector('.calculator-section');
-  if (!calcContainer) return; // Se a página atual não tiver calculadora, encerra silenciosamente
+  if (!calcContainer) return;
 
   const totals = calculateTotals();
 
@@ -396,7 +396,7 @@ function setupCalculatorEvents() {
         state.selectedMaintenance = planKey;
         updateUI();
 
-        // Rola até a calculadora se estiver na página da calculadora
+        // Rola até a calculadora
         const calcSection = document.getElementById('calculadora');
         if (calcSection) {
           calcSection.scrollIntoView({ behavior: 'smooth' });
@@ -479,7 +479,6 @@ function setupLeadForm() {
 
       showToast("🚀 Abrindo WhatsApp com seu orçamento...", "success");
 
-      // Abre em nova aba
       setTimeout(() => {
         window.open(waUrl, '_blank');
       }, 300);
@@ -572,7 +571,7 @@ function setupFAQ() {
       questionBtn.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
 
-        // Fecha todos os outros itens da mesma categoria
+        // Fecha todos os outros itens
         faqItems.forEach((other) => {
           if (other !== item) {
             other.classList.remove('active');
@@ -593,7 +592,7 @@ function setupFAQ() {
     }
   });
 
-  // Filtro de Busca em Tempo Real (se presente na página duvidas.html)
+  // Filtro de Busca em Tempo Real
   const searchInput = document.getElementById('faq-search-input');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -630,7 +629,6 @@ function setupFAQ() {
         }
       });
 
-      // Também oculta ou exibe os títulos de categoria se existirem
       document.querySelectorAll('.faq-category-header').forEach((catHeader) => {
         const headerCat = catHeader.getAttribute('data-category');
         if (targetCategory === 'todos' || headerCat === targetCategory) {
@@ -644,7 +642,117 @@ function setupFAQ() {
 }
 
 // ==========================================================================
-// 9. Toast Notification
+// 9. Gerenciador de Telas (Screen Switcher para as 3 Telas do Sistema)
+// ==========================================================================
+function switchScreen(screenName, updateHistory = true) {
+  const validScreens = ['inicio', 'calculadora', 'duvidas'];
+  const targetScreen = validScreens.includes(screenName) ? screenName : 'inicio';
+
+  const screens = document.querySelectorAll('.app-screen');
+  if (screens.length > 0) {
+    screens.forEach(screen => {
+      screen.classList.remove('active');
+    });
+
+    const activeEl = document.getElementById(`screen-${targetScreen}`);
+    if (activeEl) {
+      activeEl.classList.add('active');
+    }
+  }
+
+  // Atualiza botões e links de navegação ativos
+  document.querySelectorAll('[data-screen-target]').forEach(link => {
+    if (link.getAttribute('data-screen-target') === targetScreen) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+
+  // Atualiza o estado da calculadora caso a tela seja 'calculadora'
+  if (targetScreen === 'calculadora') {
+    updateUI();
+  }
+
+  // Rola suavemente até o topo da tela
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Sincroniza hash da URL sem causar refresh
+  if (updateHistory) {
+    history.pushState(null, '', `#${targetScreen}`);
+  }
+}
+
+function initScreenRouting() {
+  const screens = document.querySelectorAll('.app-screen');
+  if (screens.length === 0) return; // Se for uma página individual estática, não precisa do switcher
+
+  // Identifica hash inicial na URL (ex: #calculadora, #duvidas, #inicio)
+  const initialHash = window.location.hash.replace('#', '').toLowerCase();
+  if (initialHash === 'calculadora' || initialHash === 'planos') {
+    switchScreen('calculadora', false);
+  } else if (initialHash === 'duvidas' || initialHash === 'faq') {
+    switchScreen('duvidas', false);
+  } else {
+    switchScreen('inicio', false);
+  }
+
+  // Listener para navegação pelo histórico do navegador (botões Voltar/Avançar)
+  window.addEventListener('hashchange', () => {
+    const currentHash = window.location.hash.replace('#', '').toLowerCase();
+    if (currentHash === 'calculadora' || currentHash === 'planos') {
+      switchScreen('calculadora', false);
+    } else if (currentHash === 'duvidas' || currentHash === 'faq') {
+      switchScreen('duvidas', false);
+    } else {
+      switchScreen('inicio', false);
+    }
+  });
+
+  // Event listener para todos os links com data-screen-target
+  document.querySelectorAll('[data-screen-target]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = link.getAttribute('data-screen-target');
+      switchScreen(target, true);
+
+      // Fecha menu mobile se estiver aberto
+      const mobileNav = document.querySelector('.nav-mobile');
+      const toggleBtn = document.querySelector('.mobile-toggle');
+      if (mobileNav && mobileNav.classList.contains('show')) {
+        mobileNav.classList.remove('show');
+        if (toggleBtn) toggleBtn.classList.remove('active');
+      }
+    });
+  });
+
+  // Event listener para links que trocam de tela E rolam para uma seção específica (ex: #como-funciona)
+  document.querySelectorAll('[data-scroll-to]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetScreen = btn.getAttribute('data-target-screen') || 'inicio';
+      const scrollToSelector = btn.getAttribute('data-scroll-to');
+      
+      switchScreen(targetScreen, true);
+      
+      setTimeout(() => {
+        const el = document.querySelector(scrollToSelector);
+        if (el) {
+          const headerOffset = 80;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      }, 150);
+    });
+  });
+}
+
+// ==========================================================================
+// 10. Toast Notification
 // ==========================================================================
 let toastTimeout = null;
 
@@ -678,14 +786,13 @@ function showToast(message, type = "info") {
 }
 
 // ==========================================================================
-// 10. Header Scrolled & Menu Mobile
+// 11. Header Scrolled & Menu Mobile
 // ==========================================================================
 function setupNavigation() {
   const header = document.querySelector('.header');
   const toggleBtn = document.querySelector('.mobile-toggle');
   const mobileNav = document.querySelector('.nav-mobile');
 
-  // Header Scroll Effect
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) {
       if (header) header.classList.add('scrolled');
@@ -694,14 +801,12 @@ function setupNavigation() {
     }
   });
 
-  // Toggle Menu Mobile
   if (toggleBtn && mobileNav) {
     toggleBtn.addEventListener('click', () => {
       toggleBtn.classList.toggle('active');
       mobileNav.classList.toggle('show');
     });
 
-    // Fecha ao clicar em qualquer link
     mobileNav.querySelectorAll('.nav-link, .btn').forEach((link) => {
       link.addEventListener('click', () => {
         toggleBtn.classList.remove('active');
@@ -709,36 +814,16 @@ function setupNavigation() {
       });
     });
   }
-
-  // Smooth scroll com offset apenas para âncoras locais na mesma página
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#' || targetId === '') return;
-
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        const headerOffset = 80;
-        const elementPosition = targetEl.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    });
-  });
 }
 
 // ==========================================================================
-// 11. Inicialização Geral no DOMContentLoaded
+// 12. Inicialização Geral no DOMContentLoaded
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
+  initScreenRouting();
   setupCalculatorEvents();
   setupLeadForm();
   setupFAQ();
-  updateUI(); // Primeira renderização com valores padrão se a calculadora estiver presente
+  updateUI();
 });

@@ -1,37 +1,24 @@
-# 🚀 WebCraft — Criação de Sites Sob Medida com Calculadora Interativa
+# 🚀 WebCraft — Criação de Sites Sob Medida com 3 Telas Dedicadas
 
 Plataforma moderna, responsiva e de alta conversão desenvolvida para a agência **WebCraft**, especializada no desenvolvimento de sites personalizados, landing pages e soluções digitais de alto impacto.
 
-O projeto foi organizado com arquitetura **Multi-Páginas (MPA)** limpa e de alta performance, permitindo que cada área do site tenha seu próprio foco e facilidade de navegação para o cliente.
+O sistema foi estruturado em **3 Telas Principais**:
+1. **Tela 1: Início & Como Funciona**
+2. **Tela 2: Calculadora & Planos**
+3. **Tela 3: Dúvidas**
 
 ---
 
-## 📂 Estrutura de Páginas do Projeto
+## 🖥️ As 3 Telas do Sistema
 
-```text
-WebCraft/
-├── index.html         # Página 1: Início, Como Funciona, Diferenciais e Vitrine de Recursos
-├── calculadora.html   # Página 2: Calculadora Interativa em Tempo Real e Comparativo de Planos
-├── duvidas.html       # Página 3: Perguntas Frequentes (FAQ) com busca em tempo real e Canais de Suporte
-├── styles.css         # Design system completo estilo SaaS, variáveis CSS e responsividade mobile-first
-├── app.js             # Lógica reativa da calculadora, formatação BRL, validações e API do WhatsApp
-├── .gitignore         # Configurações de exclusão para arquivos temporários
-└── README.md          # Documentação do projeto
-```
-
----
-
-## 📄 Detalhamento de Cada Página
-
-### 1. `index.html` (Início & Como Funciona)
-- **Hero Section:** Headline de alto impacto ("Crie o site ideal para sua empresa pagando apenas pelo que precisa"), subtítulo persuasivo, prova social (+180 sites entregues, 4.9/5 estrelas) e mockup interativo de navegador com métricas de desempenho.
-- **Como Funciona:** Passo a passo em 3 etapas transparentes (1. Monte o pacote na calculadora -> 2. Veja o valor instantâneo -> 3. Receba seu site pronto).
+### 1. Tela de Início & Como Funciona (`#inicio` ou `index.html`)
+- **Hero Section:** Headline de alto impacto ("Crie o site ideal para sua empresa pagando apenas pelo que precisa"), prova social com métricas reais (+180 sites entregues, 4.9/5 estrelas) e mockup interativo com badges flutuantes.
+- **Como Funciona:** Passo a passo em 3 etapas simples (1. Monte o pacote na calculadora ➔ 2. Veja o valor instantâneo ➔ 3. Receba seu site pronto).
 - **Diferenciais WebCraft:** 6 pilares de qualidade técnica (Mobile-first, Foco em Conversão, Propriedade Total, Velocidade Cloud NVMe, SEO Estruturado e Suporte Humano).
-- **Vitrine de Recursos:** Apresentação visual dos principais módulos integráveis.
-- **CTAs Magnéticos:** Botões estratégicos direcionando o usuário para montar o orçamento na calculadora.
+- **Vitrine de Recursos:** Apresentação visual dos principais módulos integráveis com botões de ação para a tela da calculadora.
 
-### 2. `calculadora.html` (Calculadora Interativa & Planos de Manutenção)
-- **Calculadora em Tempo Real (Duas Colunas no Desktop):**
+### 2. Tela da Calculadora & Planos (`#calculadora` ou `calculadora.html`)
+- **Calculadora Interativa em Tempo Real (Duas Colunas no Desktop):**
   - **Bloco A (Estrutura Base - Obrigatório 1):**
     - Site Express / One-Page (R$ 590,00)
     - Site Institucional Multipáginas (R$ 1.190,00)
@@ -55,15 +42,24 @@ WebCraft/
     - Total do Investimento Inicial e simulação de **parcelamento em até 12x no cartão**.
     - Valor da Mensalidade de Hospedagem & Suporte.
     - Formulário de contato rápido (Nome, Empresa e WhatsApp com máscara automática `(11) 99999-9999`).
-    - Botão **"Enviar Pedido via WhatsApp"**: Valida os campos e abre o WhatsApp com a mensagem estruturada.
+    - Botão **"Enviar Pedido via WhatsApp"**: Valida os campos e abre o WhatsApp com mensagem estruturada.
     - Botão **"Copiar Resumo"**: Copia o texto para a área de transferência com notificação Toast.
-- **Seção de Manutenção & Hospedagem:** Explicação detalhada sobre a necessidade de estabilidade e segurança com comparativo dos planos e botões de seleção rápida.
+- **Seção de Manutenção & Hospedagem:** Explicação detalhada dos 4 pilares (Velocidade Cloud, Segurança & SSL, Backups e Suporte) e comparativo lado a lado dos 3 planos com botões de seleção rápida.
 
-### 3. `duvidas.html` (Perguntas Frequentes & Central de Ajuda)
+### 3. Tela de Dúvidas (`#duvidas` ou `duvidas.html`)
 - **Barra de Busca Instantânea:** Digite termos como "prazo", "domínio", "pagamento" e as dúvidas são filtradas em tempo real na tela.
 - **Filtros por Categoria:** Botões de filtro para *Prazos & Criação*, *Domínio & Hospedagem*, *Pagamentos & Preços* e *Alterações & Suporte*.
 - **Acordeão Suave:** Clique para expandir/recolher as dúvidas com animação fluida.
-- **Canais de Contato Direto:** 3 cards para falar no WhatsApp com especialista, ir para a calculadora ou enviar e-mail comercial.
+- **Canais de Contato Direto:** 3 cards para falar no WhatsApp com especialista (resposta em 15 min), ir para a calculadora ou enviar e-mail comercial.
+
+---
+
+## ⚡ Transição Fluida entre Telas
+
+No arquivo principal [**`index.html`**](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/index.html), as 3 telas funcionam como uma aplicação integrada:
+- Ao clicar no menu, a tela troca **instantaneamente sem recarregar a página**, preservando todas as seleções que o cliente já fez na calculadora.
+- A URL é atualizada automaticamente (`#inicio`, `#calculadora`, `#duvidas`), permitindo compartilhar links diretos para cada tela.
+- Arquivos individuais dedicados ([`calculadora.html`](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/calculadora.html) e [`duvidas.html`](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/duvidas.html)) também estão disponíveis para acesso direto.
 
 ---
 
@@ -81,36 +77,12 @@ const CONFIG = {
 };
 ```
 
-E no botão flutuante e rodapé das páginas (`index.html`, `calculadora.html`, `duvidas.html`), atualize os links diretos para o WhatsApp:
-```html
-<a href="https://wa.me/5511999999999" target="_blank" class="floating-whatsapp-btn">
-```
-
 ---
 
 ## 💻 Como Visualizar Localmente
 
-Não requer instalação de Node ou dependências externas pesadas:
-- Dê dois cliques em [**`index.html`**](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/index.html) para abrir no navegador padrão.
-- Ou execute um servidor local simples:
-  ```bash
-  # Via Python:
-  python -m http.server 8080
-
-  # Via npx:
-  npx serve .
-  ```
-
----
-
-## 🌐 Publicação no GitHub Pages (100% Gratuito)
-
-1. Faça o commit e o envio dos arquivos:
-   ```bash
-   git add .
-   git commit -m "feat: landing page multi-páginas e calculadora WebCraft"
-   git push origin main
-   ```
-2. No repositório no GitHub, abra **Settings** > **Pages**.
-3. Em **Branch**, selecione `main` e a pasta `/(root)`.
-4. Salve para gerar o link oficial do site.
+Basta dar dois cliques em [**`index.html`**](file:///C:/Users/fcaza/Documents/GitHub/WebCraft-/index.html) para abrir no navegador padrão, ou executar:
+```bash
+python -m http.server 8080
+```
+E acessar `http://localhost:8080`.

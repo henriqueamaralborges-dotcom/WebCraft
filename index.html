@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebCraft — Criação de Sites Sob Medida com Orçamento Instantâneo</title>
-  <meta name="description" content="Crie o site ideal para sua empresa pagando apenas pelo que precisa. Desenvolvimento moderno, rápido e de alta conversão.">
-  <meta name="keywords" content="criação de sites, desenvolvimento web, sites sob medida, landing page, agência web, site institucional">
-  
-  <!-- Open Graph / Redes Sociais -->
+  <meta name="description" content="Crie o site ideal para sua empresa pagando apenas pelo que precisa. Calculadora em tempo real, planos transparentes e atendimento rápido.">
+  <meta name="keywords" content="criação de sites, desenvolvimento web, sites sob medida, calculadora de orçamento, landing page, agência web">
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="WebCraft — Criação de Sites Sob Medida">
-  <meta property="og:description" content="Crie o site ideal para sua empresa pagando apenas pelo que precisa. Veja como funciona.">
+  <meta property="og:description" content="Crie o site ideal para sua empresa pagando apenas pelo que precisa. Simule seu orçamento em tempo real.">
   <meta property="og:image" content="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80">
   <meta name="theme-color" content="#0F172A">
 
@@ -31,27 +31,26 @@
 <body>
 
   <!-- ========================================================================
-       1. HEADER / NAVEGAÇÃO MULTIPÁGINA
+       HEADER / NAVEGAÇÃO ENTRE AS 3 TELAS
        ======================================================================== -->
   <header class="header">
     <div class="container header-container">
-      <a href="index.html" class="logo">
+      <a href="#inicio" class="logo" data-screen-target="inicio">
         <div class="logo-icon">
           <i class="fa-solid fa-code"></i>
         </div>
         Web<span>Craft</span>
       </a>
 
-      <!-- Menu Desktop -->
+      <!-- Menu Desktop: Exatamente as 3 Telas -->
       <nav class="nav-desktop">
-        <a href="index.html" class="nav-link active">Início</a>
-        <a href="index.html#como-funciona" class="nav-link">Como Funciona</a>
-        <a href="calculadora.html" class="nav-link">Calculadora & Planos</a>
-        <a href="duvidas.html" class="nav-link">Dúvidas</a>
+        <a href="#inicio" class="nav-link active" data-screen-target="inicio">Início & Como Funciona</a>
+        <a href="#calculadora" class="nav-link" data-screen-target="calculadora">Calculadora & Planos</a>
+        <a href="#duvidas" class="nav-link" data-screen-target="duvidas">Dúvidas</a>
       </nav>
 
       <div class="header-cta">
-        <a href="calculadora.html" class="btn btn-primary btn-sm">
+        <a href="#calculadora" class="btn btn-primary btn-sm" data-screen-target="calculadora">
           <span>Montar Meu Site</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
@@ -68,349 +67,1128 @@
 
   <!-- Menu Mobile Desdobrável -->
   <div class="nav-mobile">
-    <a href="index.html" class="nav-link active">Início</a>
-    <a href="index.html#como-funciona" class="nav-link">Como Funciona</a>
-    <a href="calculadora.html" class="nav-link">Calculadora & Planos</a>
-    <a href="duvidas.html" class="nav-link">Dúvidas Frequentes</a>
-    <a href="calculadora.html" class="btn btn-primary btn-block">Montar Meu Site</a>
+    <a href="#inicio" class="nav-link active" data-screen-target="inicio">Início & Como Funciona</a>
+    <a href="#calculadora" class="nav-link" data-screen-target="calculadora">Calculadora & Planos</a>
+    <a href="#duvidas" class="nav-link" data-screen-target="duvidas">Dúvidas</a>
+    <a href="#calculadora" class="btn btn-primary btn-block" data-screen-target="calculadora">Montar Meu Site</a>
   </div>
 
   <!-- ========================================================================
-       2. HERO SECTION
+       TELA 1: INÍCIO E COMO QUE FUNCIONA
        ======================================================================== -->
-  <section class="hero" id="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-pill">
-            <span class="badge badge-indigo badge-pulse">
-              Orçamento 100% Transparente • Sem Letras Miúdas
-            </span>
-          </div>
+  <div id="screen-inicio" class="app-screen active">
 
-          <h1 class="hero-title">
-            Crie o site ideal para sua empresa <span class="text-gradient">pagando apenas pelo que precisa</span>
-          </h1>
-
-          <p class="hero-subtitle">
-            Chega de orçamentos misteriosos e dias esperando propostas genéricas. Escolha a estrutura ideal, adicione os recursos estratégicos e veja o investimento exato na hora.
-          </p>
-
-          <div class="hero-actions">
-            <a href="calculadora.html" class="btn btn-primary btn-lg">
-              <i class="fa-solid fa-calculator"></i>
-              <span>Simular Meu Orçamento Agora</span>
-            </a>
-            <a href="#como-funciona" class="btn btn-secondary btn-lg">
-              <span>Como Funciona</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </a>
-          </div>
-
-          <div class="hero-proof">
-            <div class="proof-item">
-              <span class="proof-number">+180</span>
-              <span class="proof-label">Projetos Entregues</span>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-bg-glow"></div>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-pill">
+              <span class="badge badge-indigo badge-pulse">
+                Orçamento 100% Transparente • Sem Letras Miúdas
+              </span>
             </div>
-            <div class="proof-item">
-              <span class="proof-number">4.9/5</span>
-              <span class="proof-label">Avaliação dos Clientes</span>
-            </div>
-            <div class="proof-item">
-              <span class="proof-number">7 a 15</span>
-              <span class="proof-label">Dias para Lançamento</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Visual / Preview Mockup -->
-        <div class="hero-visual">
-          <div class="hero-card-preview">
-            <div class="browser-bar">
-              <span class="browser-dot red"></span>
-              <span class="browser-dot yellow"></span>
-              <span class="browser-dot green"></span>
-              <div class="browser-url">
-                <i class="fa-solid fa-lock" style="color: #10B981;"></i>
-                <span>https://seunegocio.com.br</span>
+            <h1 class="hero-title">
+              Crie o site ideal para sua empresa <span class="text-gradient">pagando apenas pelo que precisa</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Chega de orçamentos misteriosos e semanas de espera. Escolha a estrutura ideal, adicione os recursos estratégicos e veja o investimento exato na hora.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#calculadora" class="btn btn-primary btn-lg" data-screen-target="calculadora">
+                <i class="fa-solid fa-calculator"></i>
+                <span>Simular Meu Orçamento Agora</span>
+              </a>
+              <a href="#como-funciona" class="btn btn-secondary btn-lg" data-scroll-to="#como-funciona" data-target-screen="inicio">
+                <span>Como Funciona</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </a>
+            </div>
+
+            <div class="hero-proof">
+              <div class="proof-item">
+                <span class="proof-number">+180</span>
+                <span class="proof-label">Projetos Entregues</span>
+              </div>
+              <div class="proof-item">
+                <span class="proof-number">4.9/5</span>
+                <span class="proof-label">Avaliação dos Clientes</span>
+              </div>
+              <div class="proof-item">
+                <span class="proof-number">7 a 15</span>
+                <span class="proof-label">Dias para Lançamento</span>
               </div>
             </div>
+          </div>
 
-            <div class="mockup-body">
-              <div class="mockup-hero-box">
-                <span class="mockup-tag">Design Sob Medida</span>
-                <div class="mockup-headline">Alta Conversão & Velocidade</div>
-                <div class="mockup-text">Sites modernos projetados para gerar clientes e autoridade.</div>
-                <a href="calculadora.html" class="mockup-btn">Simular Projeto</a>
-              </div>
-
-              <div class="mockup-widgets">
-                <div class="mockup-widget-item">
-                  <i class="fa-solid fa-mobile-screen-button"></i>
-                  <div>
-                    <div class="mockup-widget-title">100% Responsivo</div>
-                    <div class="mockup-widget-sub">Celular, Tablet e PC</div>
-                  </div>
-                </div>
-                <div class="mockup-widget-item">
-                  <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
-                  <div>
-                    <div class="mockup-widget-title">Botão WhatsApp</div>
-                    <div class="mockup-widget-sub">Leads direto no bolso</div>
-                  </div>
+          <!-- Visual / Preview Mockup -->
+          <div class="hero-visual">
+            <div class="hero-card-preview">
+              <div class="browser-bar">
+                <span class="browser-dot red"></span>
+                <span class="browser-dot yellow"></span>
+                <span class="browser-dot green"></span>
+                <div class="browser-url">
+                  <i class="fa-solid fa-lock" style="color: #10B981;"></i>
+                  <span>https://seunegocio.com.br</span>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Badges Flutuantes -->
-          <div class="floating-badge badge-1">
-            <div class="floating-badge-icon green">
-              <i class="fa-solid fa-bolt"></i>
-            </div>
-            <div class="floating-badge-text">
-              <strong>Velocidade 98/100</strong>
-              <span>Otimizado para o Google</span>
-            </div>
-          </div>
+              <div class="mockup-body">
+                <div class="mockup-hero-box">
+                  <span class="mockup-tag">Design Sob Medida</span>
+                  <div class="mockup-headline">Alta Conversão & Velocidade</div>
+                  <div class="mockup-text">Sites modernos projetados para gerar clientes e autoridade.</div>
+                  <a href="#calculadora" class="mockup-btn" data-screen-target="calculadora">Simular Projeto</a>
+                </div>
 
-          <div class="floating-badge badge-2">
-            <div class="floating-badge-icon cyan">
-              <i class="fa-solid fa-shield-check"></i>
+                <div class="mockup-widgets">
+                  <div class="mockup-widget-item">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <div>
+                      <div class="mockup-widget-title">100% Responsivo</div>
+                      <div class="mockup-widget-sub">Celular, Tablet e PC</div>
+                    </div>
+                  </div>
+                  <div class="mockup-widget-item">
+                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+                    <div>
+                      <div class="mockup-widget-title">Botão WhatsApp</div>
+                      <div class="mockup-widget-sub">Leads direto no bolso</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="floating-badge-text">
-              <strong>Certificado SSL Ativo</strong>
-              <span>Conexão Criptografada</span>
+
+            <!-- Badges Flutuantes -->
+            <div class="floating-badge badge-1">
+              <div class="floating-badge-icon green">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div class="floating-badge-text">
+                <strong>Velocidade 98/100</strong>
+                <span>Otimizado para o Google</span>
+              </div>
+            </div>
+
+            <div class="floating-badge badge-2">
+              <div class="floating-badge-icon cyan">
+                <i class="fa-solid fa-shield-check"></i>
+              </div>
+              <div class="floating-badge-text">
+                <strong>Certificado SSL Ativo</strong>
+                <span>Conexão Criptografada</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Seção Como Funciona -->
+    <section class="section section-alt" id="como-funciona">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-indigo">Processo Transparente</span>
+          </div>
+          <h2>Como funciona a WebCraft?</h2>
+          <p>Desenvolvemos seu site com agilidade, metodologia clara e sem burocracias em 3 etapas simples.</p>
+        </div>
+
+        <div class="how-it-works-grid">
+          <!-- Passo 1 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon-box">
+                <i class="fa-solid fa-sliders"></i>
+              </div>
+              <span class="step-number">01</span>
+            </div>
+            <h3>1. Monte o seu pacote</h3>
+            <p>
+              Abra nossa calculadora interativa, escolha entre o Site Express ou Multipáginas e marque apenas os recursos extras necessários para seu negócio.
+            </p>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon-box">
+                <i class="fa-solid fa-receipt"></i>
+              </div>
+              <span class="step-number">02</span>
+            </div>
+            <h3>2. Veja o valor instantâneo</h3>
+            <p>
+              Sem orçamentos inflados ou dias de espera. O valor do investimento, as parcelas em até 12x no cartão e a hospedagem mensal aparecem na tela na hora.
+            </p>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="step-card">
+            <div class="step-card-header">
+              <div class="step-icon-box">
+                <i class="fa-solid fa-rocket"></i>
+              </div>
+              <span class="step-number">03</span>
+            </div>
+            <h3>3. Receba seu site pronto</h3>
+            <p>
+              Envie a simulação diretamente para nosso WhatsApp. Alinhamos sua identidade, coletamos seus materiais e colocamos seu site no ar com agilidade recorde.
+            </p>
+          </div>
+        </div>
+
+        <!-- Botão Direto para a Tela da Calculadora -->
+        <div style="margin-top: 50px; text-align: center;">
+          <a href="#calculadora" class="btn btn-primary btn-lg" data-screen-target="calculadora">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Ir para a Tela da Calculadora</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Diferenciais -->
+    <section class="section" id="diferenciais">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-indigo">Excelência Técnica</span>
+          </div>
+          <h2>Por que escolher a WebCraft?</h2>
+          <p>Não usamos modelos pesados e engessados. Criamos plataformas sob medida, modernas e de código limpo.</p>
+        </div>
+
+        <div class="differentials-grid">
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+            <h3>100% Responsivo</h3>
+            <p>Desenvolvido no modelo mobile-first para carregar impecavelmente em smartphones, tablets e computadores de alta resolução.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-bullseye"></i>
+            </div>
+            <h3>Foco Real em Conversão</h3>
+            <p>Estrutura pensada para vendas com botões magnéticos de WhatsApp, formulários limpos e gatilhos de autoridade.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-key"></i>
+            </div>
+            <h3>Você é Dono do Seu Site</h3>
+            <p>Sem travas ou amarras contratuais. Todos os códigos, domínios e arquivos pertencem exclusivamente a você e sua empresa.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <h3>Velocidade Máxima NVMe</h3>
+            <p>Hospedagem em servidores Cloud de alta performance com carregamento ultra-rápido para reter visitantes.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+            </div>
+            <h3>Estrutura Pronta para SEO</h3>
+            <p>Código semântico otimizado para que sua empresa apareça bem posicionada nas buscas do Google.</p>
+          </div>
+
+          <div class="diff-card">
+            <div class="diff-icon">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3>Atendimento Humanizado</h3>
+            <p>Fale diretamente com nossa equipe via WhatsApp. Sem robôs chatos ou abertura de chamados demorados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner Final da Tela 1 -->
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="final-cta-box">
+          <div class="final-cta-content">
+            <span class="badge badge-emerald" style="margin-bottom: 16px;">Pronto para transformar sua presença digital?</span>
+            <h2>Dê o próximo passo e tenha o site que sua empresa merece</h2>
+            <p>Abra a tela da calculadora agora, selecione os módulos e envie sua simulação direto para nossa equipe pelo WhatsApp.</p>
+            <div class="final-cta-buttons">
+              <a href="#calculadora" class="btn btn-primary btn-lg" data-screen-target="calculadora">
+                <i class="fa-solid fa-calculator"></i>
+                <span>Abrir Tela da Calculadora</span>
+              </a>
+              <a href="#duvidas" class="btn btn-secondary btn-lg" data-screen-target="duvidas">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>Ver Perguntas Frequentes</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 
   <!-- ========================================================================
-       3. SEÇÃO "COMO FUNCIONA"
+       TELA 2: CALCULADORA E PLANOS
        ======================================================================== -->
-  <section class="section section-alt" id="como-funciona">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <span class="badge badge-indigo">Processo Transparente</span>
-        </div>
-        <h2>Como funciona a WebCraft?</h2>
-        <p>Desenvolvemos seu site com agilidade, metodologia clara e sem burocracias em 3 etapas simples.</p>
-      </div>
+  <div id="screen-calculadora" class="app-screen">
 
-      <div class="how-it-works-grid">
-        <!-- Passo 1 -->
-        <div class="step-card">
-          <div class="step-card-header">
-            <div class="step-icon-box">
-              <i class="fa-solid fa-sliders"></i>
-            </div>
-            <span class="step-number">01</span>
-          </div>
-          <h3>1. Monte o seu pacote</h3>
-          <p>
-            Acesse nossa calculadora online, escolha entre o Site Express ou Institucional Multipáginas e marque apenas os recursos extras que fazem sentido para o seu negócio.
-          </p>
-        </div>
-
-        <!-- Passo 2 -->
-        <div class="step-card">
-          <div class="step-card-header">
-            <div class="step-icon-box">
-              <i class="fa-solid fa-receipt"></i>
-            </div>
-            <span class="step-number">02</span>
-          </div>
-          <h3>2. Veja o valor instantâneo</h3>
-          <p>
-            Sem orçamentos inflados ou semanas de espera. O valor total do desenvolvimento, as parcelas em até 12x no cartão e a hospedagem mensal aparecem na tela na hora.
-          </p>
-        </div>
-
-        <!-- Passo 3 -->
-        <div class="step-card">
-          <div class="step-card-header">
-            <div class="step-icon-box">
-              <i class="fa-solid fa-rocket"></i>
-            </div>
-            <span class="step-number">03</span>
-          </div>
-          <h3>3. Receba seu site pronto</h3>
-          <p>
-            Envie a simulação diretamente para nosso WhatsApp. Alinhamos sua identidade visual, coletamos seu conteúdo e colocamos seu site no ar com velocidade recorde.
+    <!-- Hero da Tela 2 -->
+    <section class="subpage-hero">
+      <div class="container">
+        <div class="subpage-hero-content">
+          <span class="badge badge-emerald badge-pulse">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Simulação 100% Online e em Tempo Real
+          </span>
+          <h1 class="subpage-title">Calculadora de Orçamento & Planos</h1>
+          <p class="subpage-subtitle">
+            Personalize cada recurso do seu site. O card lateral calcula na hora o investimento inicial, as opções de parcelamento em até 12x no cartão e a mensalidade de manutenção.
           </p>
         </div>
       </div>
+    </section>
 
-      <!-- Card de Destaque / Chamada para Ação Intermediária -->
-      <div style="margin-top: 50px; text-align: center;">
-        <a href="calculadora.html" class="btn btn-primary btn-lg">
-          <i class="fa-solid fa-calculator"></i>
-          <span>Experimentar a Calculadora Interativa</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+    <!-- Calculadora Interativa -->
+    <section class="section calculator-section" id="calculadora" style="padding-top: 30px;">
+      <div class="container">
+
+        <div class="calc-layout">
+          <!-- Coluna da Esquerda: Opções e Módulos -->
+          <div class="calc-options-col">
+
+            <!-- BLOCO A: Escolha da Estrutura Base -->
+            <div class="calc-block">
+              <div class="calc-block-header">
+                <div class="calc-block-title-group">
+                  <div class="calc-step-badge">A</div>
+                  <div>
+                    <h3 class="calc-block-title">Estrutura Base do Site</h3>
+                    <p class="calc-block-desc">Selecione o modelo estrutural inicial (obrigatório 1 modelo)</p>
+                  </div>
+                </div>
+                <span class="badge badge-indigo">Passo 1 de 3</span>
+              </div>
+
+              <div class="base-options-grid">
+                <!-- Opção 1: Site Express -->
+                <div class="option-card-radio" data-base="express">
+                  <input type="radio" name="base-structure" id="base-express" value="express">
+                  <div class="option-card-top">
+                    <div class="custom-radio-circle"></div>
+                    <span class="option-card-badge express">Mais Rápido</span>
+                  </div>
+                  <h4 class="option-card-title">Site Express / One-Page</h4>
+                  <p class="option-card-desc">
+                    Página única moderna de alta conversão com até 5 seções estratégicas (Hero, Serviços, Sobre, Depoimentos e Contato).
+                  </p>
+                  <div class="option-card-price-box">
+                    <span class="option-card-price-label">Investimento:</span>
+                    <span class="option-card-price">R$ 590</span>
+                  </div>
+                </div>
+
+                <!-- Opção 2: Site Institucional Multipáginas -->
+                <div class="option-card-radio selected" data-base="multi">
+                  <input type="radio" name="base-structure" id="base-multi" value="multi" checked>
+                  <div class="option-card-top">
+                    <div class="custom-radio-circle"></div>
+                    <span class="option-card-badge popular">Mais Popular</span>
+                  </div>
+                  <h4 class="option-card-title">Site Institucional Multipáginas</h4>
+                  <p class="option-card-desc">
+                    Arquitetura corporativa completa com até 4 páginas independentes (Início, Quem Somos, Serviços detalhados e Contato).
+                  </p>
+                  <div class="option-card-price-box">
+                    <span class="option-card-price-label">Investimento:</span>
+                    <span class="option-card-price">R$ 1.190</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOCO B: Módulos Adicionais -->
+            <div class="calc-block">
+              <div class="calc-block-header">
+                <div class="calc-block-title-group">
+                  <div class="calc-step-badge">B</div>
+                  <div>
+                    <h3 class="calc-block-title">Módulos & Recursos Adicionais</h3>
+                    <p class="calc-block-desc">Turbine seu site selecionando os recursos opcionais desejados</p>
+                  </div>
+                </div>
+                <span class="badge badge-indigo">Passo 2 de 3</span>
+              </div>
+
+              <div class="modules-grid">
+
+                <!-- Módulo Especial: Páginas Extras -->
+                <div class="module-card module-extra-pages">
+                  <div style="display: flex; align-items: flex-start; gap: 14px;">
+                    <div class="custom-checkbox">
+                      <input type="checkbox" id="chk-extra-pages">
+                      <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div>
+                      <div class="module-top">
+                        <span class="module-name">Páginas Extras</span>
+                        <span class="module-price-badge">+ R$ 150 / página</span>
+                      </div>
+                      <p class="module-desc">Adicione páginas individuais além do pacote base contratado.</p>
+                    </div>
+                  </div>
+
+                  <div class="counter-container">
+                    <button type="button" class="counter-btn" id="btn-decrease-pages" title="Diminuir páginas">-</button>
+                    <span class="counter-value" id="extra-pages-count">0</span>
+                    <button type="button" class="counter-btn" id="btn-increase-pages" title="Aumentar páginas">+</button>
+                  </div>
+                </div>
+
+                <!-- Módulo 1: Blog -->
+                <div class="module-card" data-module="blog">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-blog">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Criação de Blog / Notícias</span>
+                      <span class="module-price-badge">+ R$ 250</span>
+                    </div>
+                    <p class="module-desc">Área para publicação de artigos que atraem tráfego orgânico no Google.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 2: Galeria / Portfólio -->
+                <div class="module-card" data-module="galeria">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-galeria">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Galeria / Portfólio</span>
+                      <span class="module-price-badge">+ R$ 120</span>
+                    </div>
+                    <p class="module-desc">Exibição dinâmica com visualização ampliada (lightbox) de fotos e trabalhos.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 3: Botão Flutuante do WhatsApp -->
+                <div class="module-card" data-module="whatsapp">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-whatsapp">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Botão Flutuante do WhatsApp</span>
+                      <span class="module-price-badge">+ R$ 50</span>
+                    </div>
+                    <p class="module-desc">Botão permanente em todas as páginas para contato rápido em 1 clique.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 4: Formulário de Orçamento Completo -->
+                <div class="module-card" data-module="formulario">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-formulario">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Formulário de Orçamento</span>
+                      <span class="module-price-badge">+ R$ 100</span>
+                    </div>
+                    <p class="module-desc">Formulário sob medida com campos personalizados e envio no e-mail.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 5: Sistema de Agendamento Online -->
+                <div class="module-card" data-module="agendamento">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-agendamento">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Agendamento Online</span>
+                      <span class="module-price-badge">+ R$ 200</span>
+                    </div>
+                    <p class="module-desc">Integração para o cliente reservar horários na sua agenda de forma autônoma.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 6: Catálogo de Produtos -->
+                <div class="module-card" data-module="catalogo">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-catalogo">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Catálogo de Produtos</span>
+                      <span class="module-price-badge">+ R$ 300</span>
+                    </div>
+                    <p class="module-desc">Vitrine com fotos, descrição, valores e botão de compra direta via WhatsApp.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 7: Otimização SEO Local -->
+                <div class="module-card" data-module="seo">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-seo">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Otimização SEO Local</span>
+                      <span class="module-price-badge">+ R$ 200</span>
+                    </div>
+                    <p class="module-desc">Configuração de meta tags, sitemap e indexação no Google Search Console.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 8: Instalação de Pixel de Anúncios -->
+                <div class="module-card" data-module="pixel">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-pixel">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Pixel de Anúncios</span>
+                      <span class="module-price-badge">+ R$ 100</span>
+                    </div>
+                    <p class="module-desc">Instalação do Pixel da Meta (Facebook/Instagram) e Google Analytics 4.</p>
+                  </div>
+                </div>
+
+                <!-- Módulo 9: Registro de Domínio por 1 Ano -->
+                <div class="module-card" data-module="dominio">
+                  <div class="custom-checkbox">
+                    <input type="checkbox" id="chk-dominio">
+                    <i class="fa-solid fa-check"></i>
+                  </div>
+                  <div class="module-info">
+                    <div class="module-top">
+                      <span class="module-name">Registro de Domínio (1 Ano)</span>
+                      <span class="module-price-badge">+ R$ 60</span>
+                    </div>
+                    <p class="module-desc">Consultoria e anuidade inclusa para seu endereço .com.br ou .com.</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- BLOCO C: Plano de Manutenção / Hospedagem Mensal -->
+            <div class="calc-block">
+              <div class="calc-block-header">
+                <div class="calc-block-title-group">
+                  <div class="calc-step-badge">C</div>
+                  <div>
+                    <h3 class="calc-block-title">Plano de Manutenção & Hospedagem</h3>
+                    <p class="calc-block-desc">Garante site no ar, ultra-rápido, com backups e suporte contínuo (obrigatório 1 plano)</p>
+                  </div>
+                </div>
+                <span class="badge badge-indigo">Passo 3 de 3</span>
+              </div>
+
+              <div class="maintenance-grid">
+                <!-- Plano Básico -->
+                <div class="maintenance-card" data-maintenance="basico">
+                  <input type="radio" name="maintenance-plan" id="maint-basico" value="basico">
+                  <div class="maintenance-header">
+                    <span class="maintenance-badge">Essencial</span>
+                    <div class="custom-radio-circle"></div>
+                  </div>
+                  <h4 class="maintenance-name">Plano Básico</h4>
+                  <div class="maintenance-price-row">
+                    <span class="maintenance-price">R$ 49</span>
+                    <span class="maintenance-freq">/mês</span>
+                  </div>
+                  <ul class="maintenance-features">
+                    <li><i class="fa-solid fa-check"></i> Hospedagem Cloud NVMe</li>
+                    <li><i class="fa-solid fa-check"></i> Certificado SSL Blindado</li>
+                    <li><i class="fa-solid fa-check"></i> Backup semanal automático</li>
+                  </ul>
+                </div>
+
+                <!-- Plano Pro -->
+                <div class="maintenance-card selected" data-maintenance="pro">
+                  <input type="radio" name="maintenance-plan" id="maint-pro" value="pro" checked>
+                  <div class="maintenance-header">
+                    <span class="maintenance-badge pro">Recomendado</span>
+                    <div class="custom-radio-circle"></div>
+                  </div>
+                  <h4 class="maintenance-name">Plano Pro</h4>
+                  <div class="maintenance-price-row">
+                    <span class="maintenance-price">R$ 99</span>
+                    <span class="maintenance-freq">/mês</span>
+                  </div>
+                  <ul class="maintenance-features">
+                    <li><i class="fa-solid fa-check"></i> Tudo do Plano Básico</li>
+                    <li><i class="fa-solid fa-check"></i> <strong>1h de alterações/mês</strong></li>
+                    <li><i class="fa-solid fa-check"></i> Monitoramento 24/7</li>
+                  </ul>
+                </div>
+
+                <!-- Plano Premium -->
+                <div class="maintenance-card" data-maintenance="premium">
+                  <input type="radio" name="maintenance-plan" id="maint-premium" value="premium">
+                  <div class="maintenance-header">
+                    <span class="maintenance-badge">Completo</span>
+                    <div class="custom-radio-circle"></div>
+                  </div>
+                  <h4 class="maintenance-name">Plano Premium</h4>
+                  <div class="maintenance-price-row">
+                    <span class="maintenance-price">R$ 149</span>
+                    <span class="maintenance-freq">/mês</span>
+                  </div>
+                  <ul class="maintenance-features">
+                    <li><i class="fa-solid fa-check"></i> Tudo do Plano Pro</li>
+                    <li><i class="fa-solid fa-check"></i> Alterações ilimitadas simples</li>
+                    <li><i class="fa-solid fa-check"></i> Suporte VIP via WhatsApp</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Coluna da Direita: Card de Resumo Fixo (Sticky Sidebar) -->
+          <div class="calc-summary-col">
+            <div class="summary-card">
+              <div class="summary-card-header">
+                <span class="summary-header-title">
+                  <i class="fa-solid fa-receipt"></i>
+                  Resumo do Projeto
+                </span>
+                <span class="badge badge-emerald badge-pulse">Ao Vivo</span>
+              </div>
+
+              <div class="summary-card-body">
+                <!-- Lista Dinâmica de Itens Selecionados -->
+                <div class="selected-items-wrapper">
+                  <div class="selected-items-title">Configuração Selecionada</div>
+                  <div class="selected-items-list" id="summary-selected-items">
+                    <!-- Injetado dinamicamente via JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Bloco de Preço e Totais -->
+                <div class="summary-pricing-block">
+                  <div class="price-row-initial">
+                    <span class="price-row-label">Investimento de Criação</span>
+                    <div class="price-value-big" id="summary-total-price">R$ 1.190,00</div>
+                    <div class="price-installments-badge">
+                      <i class="fa-regular fa-credit-card"></i>
+                      <span>ou em até 12x de <strong id="summary-installment-price">R$ 99,17</strong> no cartão</span>
+                    </div>
+                  </div>
+
+                  <div class="price-divider"></div>
+
+                  <div class="price-row-maintenance">
+                    <span class="maint-label">Hospedagem & Suporte:</span>
+                    <span class="maint-value" id="summary-maint-price">R$ 99,00/mês</span>
+                  </div>
+                </div>
+
+                <!-- Formulário de Contato Direto -->
+                <form class="summary-form" id="lead-form" onsubmit="return false;">
+                  <div class="form-group">
+                    <input type="text" id="lead-name" class="form-input" placeholder="Seu Nome Completo *" required>
+                    <span class="form-error-msg">Por favor, informe seu nome.</span>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" id="lead-company" class="form-input" placeholder="Nome da Sua Empresa / Projeto">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="tel" id="lead-phone" class="form-input" placeholder="Seu WhatsApp (ex: 11 99999-9999) *" required>
+                    <span class="form-error-msg">Informe um WhatsApp válido com DDD.</span>
+                  </div>
+
+                  <!-- Botão CTA Principal -->
+                  <button type="button" class="btn btn-whatsapp btn-block btn-lg" id="btn-send-whatsapp">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i>
+                    <span>Enviar Pedido via WhatsApp</span>
+                  </button>
+
+                  <!-- Botão Auxiliar Copiar Resumo -->
+                  <button type="button" class="btn btn-secondary btn-block btn-sm" id="btn-copy-summary">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Resumo do Orçamento</span>
+                  </button>
+                </form>
+
+                <div class="summary-guarantees">
+                  <div class="guarantee-item">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Dados Seguros</span>
+                  </div>
+                  <div class="guarantee-item">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Sem Compromisso</span>
+                  </div>
+                  <div class="guarantee-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Resposta em 15 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Seção Detalhada de Planos & Hospedagem -->
+    <section class="section section-dark" id="planos">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <span class="badge badge-cyan">Segurança e Continuidade</span>
+          </div>
+          <h2>Por que a manutenção mensal é indispensável?</h2>
+          <p>Um site profissional requer servidores estáveis, certificados atualizados e suporte especializado para continuar gerando vendas sem parar.</p>
+        </div>
+
+        <!-- 4 Pilares da Manutenção -->
+        <div class="maint-pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-icon">
+              <i class="fa-solid fa-gauge-high"></i>
+            </div>
+            <h3>Velocidade Cloud</h3>
+            <p>Servidores NVMe de alto desempenho com CDN global. Sites rápidos retêm clientes e têm prioridade de posicionamento no Google.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">
+              <i class="fa-solid fa-shield-virus"></i>
+            </div>
+            <h3>Segurança & SSL</h3>
+            <p>Certificado HTTPS renovado sem preocupação, proteção antivírus, firewalls e monitoramento ativo contra tentativas de invasão.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <h3>Backups Periódicos</h3>
+            <p>Cópias automáticas de segurança do banco de dados e arquivos. Em caso de imprevistos, seu site é restaurado com total integridade.</p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3>Suporte Especializado</h3>
+            <p>Esqueça complexidades técnicas. Quer trocar um número de telefone, atualizar um preço ou substituir fotos? Nossa equipe resolve para você.</p>
+          </div>
+        </div>
+
+        <!-- Comparativo Detalhado dos Planos -->
+        <div class="plans-comparison-grid">
+          <!-- Card Básico -->
+          <div class="plan-column-card">
+            <div class="plan-col-name">Plano Básico</div>
+            <div class="plan-col-desc">Ideal para sites institucionais com baixa demanda de alterações periódicas.</div>
+            <div class="plan-col-price">R$ 49 <span>/mês</span></div>
+
+            <ul class="plan-col-features">
+              <li><i class="fa-solid fa-circle-check"></i> Hospedagem Cloud NVMe</li>
+              <li><i class="fa-solid fa-circle-check"></i> Certificado SSL Incluso</li>
+              <li><i class="fa-solid fa-circle-check"></i> Backup semanal automático</li>
+              <li><i class="fa-solid fa-circle-check"></i> Uptime garantido 99.8%</li>
+              <li style="opacity: 0.45;"><i class="fa-solid fa-circle-xmark" style="color: #64748B;"></i> Horas de alterações inclusas</li>
+            </ul>
+
+            <button type="button" class="btn btn-secondary btn-block btn-select-plan" data-plan="basico">
+              Selecionar na Calculadora
+            </button>
+          </div>
+
+          <!-- Card Pro (Destaque) -->
+          <div class="plan-column-card featured">
+            <span class="plan-col-badge">Mais Escolhido</span>
+            <div class="plan-col-name">Plano Pro</div>
+            <div class="plan-col-desc">Perfeito para empresas ativas que atualizam conteúdos, banners e fotos todo mês.</div>
+            <div class="plan-col-price">R$ 99 <span>/mês</span></div>
+
+            <ul class="plan-col-features">
+              <li><i class="fa-solid fa-circle-check"></i> Tudo do Plano Básico</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>1 hora mensal de alterações</strong></li>
+              <li><i class="fa-solid fa-circle-check"></i> Troca de textos, fotos e links</li>
+              <li><i class="fa-solid fa-circle-check"></i> Backups diários e redundantes</li>
+              <li><i class="fa-solid fa-circle-check"></i> Atendimento via Ticket e E-mail</li>
+            </ul>
+
+            <button type="button" class="btn btn-primary btn-block btn-select-plan" data-plan="pro">
+              Selecionar na Calculadora
+            </button>
+          </div>
+
+          <!-- Card Premium -->
+          <div class="plan-column-card">
+            <div class="plan-col-name">Plano Premium</div>
+            <div class="plan-col-desc">Para quem exige atendimento VIP prioritário via WhatsApp e máxima performance contínua.</div>
+            <div class="plan-col-price">R$ 149 <span>/mês</span></div>
+
+            <ul class="plan-col-features">
+              <li><i class="fa-solid fa-circle-check"></i> Tudo do Plano Pro</li>
+              <li><i class="fa-solid fa-circle-check"></i> <strong>Suporte Prioritário no WhatsApp</strong></li>
+              <li><i class="fa-solid fa-circle-check"></i> Alterações rápidas com prazo reduzido</li>
+              <li><i class="fa-solid fa-circle-check"></i> Relatório mensal de acessos e métricas</li>
+              <li><i class="fa-solid fa-circle-check"></i> Otimização contínua de performance</li>
+            </ul>
+
+            <button type="button" class="btn btn-secondary btn-block btn-select-plan" data-plan="premium">
+              Selecionar na Calculadora
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
 
   <!-- ========================================================================
-       4. SEÇÃO DE DIFERENCIAIS WEBCRAFT
+       TELA 3: DÚVIDAS (FAQ & AJUDA)
        ======================================================================== -->
-  <section class="section" id="diferenciais">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <span class="badge badge-indigo">Excelência Técnica</span>
+  <div id="screen-duvidas" class="app-screen">
+
+    <!-- Hero da Tela 3 -->
+    <section class="subpage-hero">
+      <div class="container">
+        <div class="subpage-hero-content">
+          <span class="badge badge-indigo">
+            <i class="fa-solid fa-circle-question"></i> Central de Ajuda & Transparência
+          </span>
+          <h1 class="subpage-title">Dúvidas Frequentes (FAQ)</h1>
+          <p class="subpage-subtitle">
+            Reunimos aqui as dúvidas mais comuns dos nossos clientes sobre criação de sites, prazos de entrega, domínio, pagamentos e suporte.
+          </p>
         </div>
-        <h2>Por que escolher a WebCraft?</h2>
-        <p>Não usamos modelos prontos pesados e engessados. Criamos plataformas leves, modernas e sob medida para alavancar suas vendas.</p>
       </div>
+    </section>
 
-      <div class="differentials-grid">
-        <div class="diff-card">
-          <div class="diff-icon">
-            <i class="fa-solid fa-mobile-screen-button"></i>
+    <!-- Controles de Busca e Filtros de Categoria -->
+    <section class="section" style="padding-top: 10px; padding-bottom: 90px;">
+      <div class="container">
+
+        <div class="faq-controls">
+          <!-- Campo de Busca em Tempo Real -->
+          <div class="faq-search-box">
+            <i class="fa-solid fa-magnifying-glass faq-search-icon"></i>
+            <input type="text" id="faq-search-input" class="faq-search-input" placeholder="Pesquisar dúvida (ex: prazo, pagamento, domínio, alterações)...">
           </div>
-          <h3>100% Responsivo</h3>
-          <p>Mais de 80% do tráfego da internet é mobile. Desenvolvemos o layout pensado primeiro no celular, oferecendo experiência perfeita em qualquer dispositivo.</p>
+
+          <!-- Filtros por Categoria -->
+          <div class="faq-filter-pills">
+            <button type="button" class="faq-filter-btn active" data-category="todos">Todas as Dúvidas</button>
+            <button type="button" class="faq-filter-btn" data-category="prazos">Prazos & Criação</button>
+            <button type="button" class="faq-filter-btn" data-category="dominio">Domínio & Hospedagem</button>
+            <button type="button" class="faq-filter-btn" data-category="pagamentos">Pagamentos & Preços</button>
+            <button type="button" class="faq-filter-btn" data-category="suporte">Alterações & Suporte</button>
+          </div>
         </div>
 
-        <div class="diff-card">
-          <div class="diff-icon">
-            <i class="fa-solid fa-bullseye"></i>
-          </div>
-          <h3>Foco Real em Conversão</h3>
-          <p>Estrutura estratégica com CTAs magnéticos, botões de WhatsApp de alta visibilidade e formulários otimizados para atrair clientes de verdade.</p>
-        </div>
+        <!-- Container das Perguntas em Acordeão -->
+        <div class="faq-container">
 
-        <div class="diff-card">
-          <div class="diff-icon">
-            <i class="fa-solid fa-key"></i>
+          <!-- CATEGORIA 1: PRAZOS E CRIAÇÃO -->
+          <div class="faq-category-header" data-category="prazos">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Prazos e Processo de Criação</h3>
           </div>
-          <h3>Você é Dono do Seu Site</h3>
-          <p>Sem travas contratuais ou plataformas proprietárias presas. Todos os códigos, domínios e arquivos pertencem integralmente a você e sua empresa.</p>
-        </div>
 
-        <div class="diff-card">
-          <div class="diff-icon">
-            <i class="fa-solid fa-gauge-high"></i>
+          <!-- Pergunta 1 -->
+          <div class="faq-item" data-category="prazos">
+            <button class="faq-question">
+              <span>Quanto tempo leva para o meu site ficar pronto?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>O prazo padrão para o <strong>Site Express (One-Page)</strong> é de <strong>5 a 7 dias úteis</strong> após o alinhamento inicial e envio dos materiais. Para o <strong>Site Institucional Multipáginas</strong>, o prazo médio é de <strong>10 a 15 dias úteis</strong>. Nosso fluxo de trabalho é otimizado para entregar rápido sem perder qualidade.</p>
+            </div>
           </div>
-          <h3>Velocidade Máxima NVMe</h3>
-          <p>Sites lentos perdem clientes em segundos. Nossa arquitetura garante notas altas no Google PageSpeed e carregamento quase instantâneo.</p>
-        </div>
 
-        <div class="diff-card">
-          <div class="diff-icon">
-            <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <!-- Pergunta 2 -->
+          <div class="faq-item" data-category="prazos">
+            <button class="faq-question">
+              <span>Como vocês recebem o material e os textos da minha empresa?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Após fechar o orçamento pelo WhatsApp, enviamos um formulário de briefing super descomplicado. Você pode nos enviar fotos, logomarca e textos pelo WhatsApp ou através de uma pasta compartilhada no Google Drive. Se você não tiver os textos prontos, nossa equipe te orienta a estruturá-los.</p>
+            </div>
           </div>
-          <h3>Estrutura Pronta para SEO</h3>
-          <p>Meta tags configuradas, URLs amigáveis, sitemaps XML e indexação no Google Search Console para sua empresa ser facilmente encontrada.</p>
-        </div>
 
-        <div class="diff-card">
-          <div class="diff-icon">
+          <!-- Pergunta 3 -->
+          <div class="faq-item" data-category="prazos">
+            <button class="faq-question">
+              <span>E se a minha empresa não tiver fotos profissionais ou logotipo em vetor?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Não se preocupe! Nós selecionamos e licenciamos fotografias em alta resolução de bancos de imagens profissionais que combinem perfeitamente com seu segmento. Caso precise de pequenos ajustes no seu logotipo atual, também cuidamos disso.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 4 -->
+          <div class="faq-item" data-category="prazos">
+            <button class="faq-question">
+              <span>Quantas rodadas de alterações posso solicitar antes da entrega final?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Apresentamos uma versão de prévia do site no nosso servidor de testes. Você tem total liberdade para solicitar ajustes visuais, mudanças de textos, cores ou posições até que o projeto esteja 100% de acordo com suas expectativas antes de ser publicado oficialmente.</p>
+            </div>
+          </div>
+
+          <!-- CATEGORIA 2: DOMÍNIO E HOSPEDAGEM -->
+          <div class="faq-category-header" data-category="dominio">
+            <i class="fa-solid fa-server"></i>
+            <h3>Domínio, Hospedagem e Segurança</h3>
+          </div>
+
+          <!-- Pergunta 5 -->
+          <div class="faq-item" data-category="dominio">
+            <button class="faq-question">
+              <span>O domínio (ex: meunegocio.com.br) já está incluso?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Se você já possui um domínio registrado, realizamos todo o apontamento de DNS e configuração técnica gratuitamente. Se ainda não possui, você pode marcar a opção <strong>"Registro de Domínio por 1 Ano" (R$ 60)</strong> na calculadora que nós cuidamos do registro oficial em seu nome/CNPJ.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 6 -->
+          <div class="faq-item" data-category="dominio">
+            <button class="faq-question">
+              <span>A assinatura de manutenção e hospedagem mensal é obrigatória?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Todo site na internet requer uma infraestrutura de hospedagem conectada 24 horas por dia e certificado de segurança SSL renovado. Nossos planos de manutenção já integram servidores Cloud NVMe, backups automáticos e suporte contínuo. Caso sua empresa já conte com um servidor próprio, podemos entregar o código-fonte mediante alinhamento prévio.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 7 -->
+          <div class="faq-item" data-category="dominio">
+            <button class="faq-question">
+              <span>O que acontece se eu quiser transferir meu site para outro servidor no futuro?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Na WebCraft você é dono do seu site! Não prendemos clientes através de fidelidade forçada. Se um dia desejar migrar para outro servidor, disponibilizamos todos os arquivos, códigos e instruções de instalação sem complicações.</p>
+            </div>
+          </div>
+
+          <!-- CATEGORIA 3: PAGAMENTOS E PREÇOS -->
+          <div class="faq-category-header" data-category="pagamentos">
+            <i class="fa-regular fa-credit-card"></i>
+            <h3>Pagamentos, Valores e Parcelamento</h3>
+          </div>
+
+          <!-- Pergunta 8 -->
+          <div class="faq-item" data-category="pagamentos">
+            <button class="faq-question">
+              <span>Como funcionam as formas de pagamento do desenvolvimento?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Oferecemos duas modalidades principais:
+                <br>• <strong>À vista via Pix:</strong> 50% de entrada no início do projeto e os 50% restantes somente após a aprovação e publicação do site.
+                <br>• <strong>Cartão de Crédito:</strong> Parcelamento do valor integral em até <strong>12 vezes no cartão</strong> com liberação imediata.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pergunta 9 -->
+          <div class="faq-item" data-category="pagamentos">
+            <button class="faq-question">
+              <span>O valor calculado na calculadora é exatamente o que vou pagar?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p><strong>Sim, 100% transparente!</strong> Não cobramos taxas ocultas, custos surpresa ou adicionais imprevistos. O valor apresentado no card de resumo é o investimento exato do seu projeto conforme os módulos que você escolheu.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 10 -->
+          <div class="faq-item" data-category="pagamentos">
+            <button class="faq-question">
+              <span>Posso pagar parcelado em mais de um cartão de crédito?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Sim! Nosso link de pagamento oficial via gateway seguro permite dividir o valor total entre dois cartões de crédito diferentes caso você precise otimizar seu limite.</p>
+            </div>
+          </div>
+
+          <!-- CATEGORIA 4: ALTERAÇÕES E SUPORTE -->
+          <div class="faq-category-header" data-category="suporte">
             <i class="fa-solid fa-headset"></i>
+            <h3>Alterações, Manutenção e Escalabilidade</h3>
           </div>
-          <h3>Atendimento Ágil e Humano</h3>
-          <p>Esqueça robôs e chamados demorados. Nossa equipe fala com você diretamente pelo WhatsApp para tirar dúvidas e realizar alinhamentos.</p>
+
+          <!-- Pergunta 11 -->
+          <div class="faq-item" data-category="suporte">
+            <button class="faq-question">
+              <span>Eu mesmo poderei editar textos, fotos e produtos no futuro?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Sim! Entregamos orientações práticas para sua equipe realizar edições pontuais. Além disso, se você optar pelo nosso <strong>Plano Pro</strong> ou <strong>Premium</strong> de manutenção, você nem precisa gastar seu tempo: basta nos enviar o que quer trocar pelo WhatsApp que nossa equipe faz para você.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 12 -->
+          <div class="faq-item" data-category="suporte">
+            <button class="faq-question">
+              <span>Posso adicionar novos módulos ou páginas extras depois que o site estiver no ar?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Com certeza. Nossos sites são construídos com tecnologia modular e código escalável. Se no futuro sua empresa quiser integrar um sistema de agendamento, criar um blog ou catálogo completo, implementamos de forma fluida sem precisar refazer o site do zero.</p>
+            </div>
+          </div>
+
+          <!-- Pergunta 13 -->
+          <div class="faq-item" data-category="suporte">
+            <button class="faq-question">
+              <span>Meu site vai aparecer na primeira página do Google?</span>
+              <div class="faq-toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+              </div>
+            </button>
+            <div class="faq-answer">
+              <p>Todos os nossos projetos são desenvolvidos seguindo as melhores práticas do Google (SEO técnico on-page): velocidade máxima, carregamento para mobile, meta tags e indexação imediata no Google Search Console.</p>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ========================================================================
-       5. VITRINE DE MÓDULOS DISPONÍVEIS
-       ======================================================================== -->
-  <section class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag">
-          <span class="badge badge-emerald">Módulos Flexíveis</span>
-        </div>
-        <h2>Tudo o que seu projeto precisa, sem excessos</h2>
-        <p>Você escolhe exatamente o que quer colocar no seu site. Veja algumas das opções que você pode adicionar na nossa calculadora:</p>
-      </div>
+        <!-- SEÇÃO: AINDA COM DÚVIDAS? CANAIS DIRETOS -->
+        <div style="margin-top: 80px; text-align: center;">
+          <span class="badge badge-emerald">Atendimento Especializado</span>
+          <h2 style="font-family: var(--font-heading); font-size: 2rem; color: var(--primary-900); margin: 12px 0 16px 0;">
+            Não encontrou o que procurava?
+          </h2>
+          <p style="color: var(--primary-600); max-width: 600px; margin: 0 auto 36px auto;">
+            Nossa equipe está disponível em horário comercial para tirar qualquer dúvida específica do seu segmento.
+          </p>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px;">
-          <i class="fa-brands fa-whatsapp" style="font-size: 1.8rem; color: #25D366; margin-bottom: 12px;"></i>
-          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 6px;">WhatsApp Flutuante</h4>
-          <p style="font-size: 0.85rem; color: #64748B;">Botão permanente com mensagem personalizada para conversão imediata.</p>
-        </div>
+          <div class="help-cards-grid">
+            <!-- Card 1: WhatsApp -->
+            <div class="help-card">
+              <div class="help-icon-circle whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <h4>Conversar no WhatsApp</h4>
+              <p>Fale diretamente com um especialista técnico em tempo real. Resposta média em 15 minutos.</p>
+              <a href="https://wa.me/5511999999999" target="_blank" class="btn btn-whatsapp btn-block">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Abrir WhatsApp</span>
+              </a>
+            </div>
 
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px;">
-          <i class="fa-solid fa-calendar-check" style="font-size: 1.8rem; color: #4F46E5; margin-bottom: 12px;"></i>
-          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 6px;">Agendamento Online</h4>
-          <p style="font-size: 0.85rem; color: #64748B;">Seus clientes reservam reuniões ou consultas na sua agenda sem atritos.</p>
-        </div>
+            <!-- Card 2: Calculadora -->
+            <div class="help-card">
+              <div class="help-icon-circle email">
+                <i class="fa-solid fa-calculator"></i>
+              </div>
+              <h4>Montar Orçamento</h4>
+              <p>Descubra os valores exatos selecionando os módulos que seu negócio precisa agora.</p>
+              <a href="#calculadora" class="btn btn-primary btn-block" data-screen-target="calculadora">
+                <span>Ir para a Calculadora</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
 
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px;">
-          <i class="fa-solid fa-newspaper" style="font-size: 1.8rem; color: #06B6D4; margin-bottom: 12px;"></i>
-          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 6px;">Blog / Notícias</h4>
-          <p style="font-size: 0.85rem; color: #64748B;">Publique artigos educativos e aumente sua relevância orgânica no Google.</p>
-        </div>
-
-        <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px;">
-          <i class="fa-solid fa-boxes-stacked" style="font-size: 1.8rem; color: #10B981; margin-bottom: 12px;"></i>
-          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 6px;">Catálogo de Produtos</h4>
-          <p style="font-size: 0.85rem; color: #64748B;">Apresente seus produtos com fotos, especificações e pedidos direto no WhatsApp.</p>
-        </div>
-      </div>
-
-      <div style="margin-top: 40px; text-align: center;">
-        <a href="calculadora.html" class="btn btn-primary btn-lg">
-          <i class="fa-solid fa-calculator"></i>
-          <span>Acessar a Calculadora e Montar Meu Site</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       6. CTA FINAL BANNER
-       ======================================================================== -->
-  <section class="section">
-    <div class="container">
-      <div class="final-cta-box">
-        <div class="final-cta-content">
-          <span class="badge badge-emerald" style="margin-bottom: 16px;">Pronto para transformar sua presença digital?</span>
-          <h2>Dê o próximo passo e tenha o site que sua empresa merece</h2>
-          <p>Visite nossa calculadora agora, selecione os módulos e envie sua simulação direto para nossa equipe pelo WhatsApp.</p>
-          <div class="final-cta-buttons">
-            <a href="calculadora.html" class="btn btn-primary btn-lg">
-              <i class="fa-solid fa-calculator"></i>
-              <span>Abrir Calculadora de Orçamento</span>
-            </a>
-            <a href="duvidas.html" class="btn btn-secondary btn-lg">
-              <i class="fa-solid fa-circle-question"></i>
-              <span>Ver Dúvidas Frequentes</span>
-            </a>
+            <!-- Card 3: E-mail -->
+            <div class="help-card">
+              <div class="help-icon-circle calendar">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <h4>Enviar E-mail</h4>
+              <p>Precisa de uma proposta personalizada para licitação ou empresa de grande porte?</p>
+              <a href="mailto:contato@webcraft.com.br" class="btn btn-secondary btn-block">
+                <i class="fa-regular fa-envelope"></i>
+                <span>contato@webcraft.com.br</span>
+              </a>
+            </div>
           </div>
         </div>
+
       </div>
-    </div>
-  </section>
+    </section>
+
+  </div>
 
   <!-- ========================================================================
-       7. RODAPÉ (FOOTER)
+       RODAPÉ (FOOTER UNIFICADO PARA TODAS AS TELAS)
        ======================================================================== -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <!-- Coluna Marca -->
         <div class="footer-col-brand">
-          <a href="index.html" class="logo">
+          <a href="#inicio" class="logo" data-screen-target="inicio">
             <div class="logo-icon">
               <i class="fa-solid fa-code"></i>
             </div>
             Web<span>Craft</span>
           </a>
           <p>
-            Agência especializada em criação de sites sob medida, landing pages de alta conversão e presença digital de alto impacto para empresas e profissionais.
+            Agência especializada em desenvolvimento de sites sob medida, landing pages de alta conversão e presença digital de alto impacto para empresas e profissionais.
           </p>
           <div class="footer-social-links">
             <a href="#" class="social-link-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -419,27 +1197,25 @@
           </div>
         </div>
 
-        <!-- Coluna Links Rápidos -->
+        <!-- Coluna Telas do Sistema -->
         <div>
           <h4 class="footer-heading">Navegação</h4>
           <ul class="footer-links">
-            <li><a href="index.html">Início</a></li>
-            <li><a href="index.html#como-funciona">Como Funciona</a></li>
-            <li><a href="calculadora.html">Calculadora de Preço</a></li>
-            <li><a href="calculadora.html#planos">Planos de Hospedagem</a></li>
-            <li><a href="duvidas.html">Perguntas Frequentes (FAQ)</a></li>
+            <li><a href="#inicio" data-screen-target="inicio">Início & Como Funciona</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Calculadora & Planos</a></li>
+            <li><a href="#duvidas" data-screen-target="duvidas">Dúvidas Frequentes</a></li>
           </ul>
         </div>
 
-        <!-- Coluna Serviços -->
+        <!-- Coluna Soluções -->
         <div>
-          <h4 class="footer-heading">Páginas & Recursos</h4>
+          <h4 class="footer-heading">Soluções</h4>
           <ul class="footer-links">
-            <li><a href="calculadora.html">Simular Orçamento</a></li>
-            <li><a href="calculadora.html">Site Express (One-Page)</a></li>
-            <li><a href="calculadora.html">Site Multipáginas</a></li>
-            <li><a href="calculadora.html#planos">Manutenção & Cloud SSL</a></li>
-            <li><a href="duvidas.html">Central de Ajuda</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Site Express (One-Page)</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Site Multipáginas</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Otimização SEO Local</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Catálogo de Produtos</a></li>
+            <li><a href="#calculadora" data-screen-target="calculadora">Manutenção & Cloud SSL</a></li>
           </ul>
         </div>
 
@@ -482,7 +1258,7 @@
   </footer>
 
   <!-- ========================================================================
-       8. BOTÃO FLUTUANTE DO WHATSAPP & TOAST
+       BOTÃO FLUTUANTE DO WHATSAPP & TOAST
        ======================================================================== -->
   <a href="https://wa.me/5511999999999" target="_blank" class="floating-whatsapp-btn" aria-label="Fale conosco no WhatsApp" title="Falar no WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
