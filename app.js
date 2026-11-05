@@ -4,20 +4,16 @@
  */
 
 // ==========================================================================
-// 1. Configurações Globais (Edite aqui o telefone da sua agência)
+// 1. Configurações Globais e Dados Dinâmicos com Fallback
 // ==========================================================================
-const CONFIG = {
-  // Número oficial do WhatsApp para receber orçamentos (DDI + DDD + Número sem traços)
+const DEFAULT_CONFIG = {
   whatsappPhone: "5511974814897", 
   currencyLocale: "pt-BR",
   currencyCode: "BRL",
   maxInstallments: 12
 };
 
-// ==========================================================================
-// 2. Dicionário de Preços e Dados dos Módulos
-// ==========================================================================
-const PRICING_DATA = {
+const DEFAULT_PRICING_DATA = {
   bases: {
     "express": {
       name: "Site Express / One-Page",
@@ -88,8 +84,28 @@ const PRICING_DATA = {
   }
 };
 
+// Funções para carregar valores atualizados do Painel Admin (localStorage)
+function getActiveConfig() {
+  const saved = localStorage.getItem('webcraft_config');
+  if (saved) {
+    try { return { ...DEFAULT_CONFIG, ...JSON.parse(saved) }; } catch(e) {}
+  }
+  return DEFAULT_CONFIG;
+}
+
+function getActivePricing() {
+  const saved = localStorage.getItem('webcraft_pricing');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  return DEFAULT_PRICING_DATA;
+}
+
+let CONFIG = getActiveConfig();
+let PRICING_DATA = getActivePricing();
+
 // ==========================================================================
-// 3. Estado da Calculadora
+// 2. Estado da Calculadora
 // ==========================================================================
 const state = {
   selectedBase: "multi", // Padrão recomendado
@@ -102,7 +118,7 @@ const state = {
 };
 
 // ==========================================================================
-// 4. Utilitários de Formatação
+// 3. Utilitários de Formatação
 // ==========================================================================
 const formatCurrency = (value) => {
   return new Intl.NumberFormat(CONFIG.currencyLocale, {
@@ -132,14 +148,18 @@ const maskPhone = (value) => {
 };
 
 // ==========================================================================
-// 5. Motor de Cálculo e Atualização da Interface
+// 4. Motor de Cálculo e Atualização da Interface
 // ==========================================================================
 function calculateTotals() {
+  // Atualiza com dados mais recentes do admin
+  CONFIG = getActiveConfig();
+  PRICING_DATA = getActivePricing();
+
   const baseInfo = PRICING_DATA.bases[state.selectedBase] || PRICING_DATA.bases["multi"];
   let initialTotal = baseInfo.price;
 
   // Soma de páginas extras
-  const extraPagesTotal = state.extraPagesCount * PRICING_DATA.extraPageUnitPrice;
+  const extraPagesTotal = state.extraPagesCount * (PRICING_DATA.extraPageUnitPrice || 150);
   initialTotal += extraPagesTotal;
 
   // Soma dos módulos opcionais selecionados
@@ -172,10 +192,17 @@ function updateUI() {
 
   const totals = calculateTotals();
 
-  // 1. Atualiza os cards visuais de rádio da Base
+  // 1. Atualiza labels de preço visual nos cards de Base conforme salvo no Admin
   document.querySelectorAll('.option-card-radio[data-base]').forEach((card) => {
     const baseKey = card.getAttribute('data-base');
     const radio = card.querySelector('input[type="radio"]');
+    
+    // Atualiza texto do preço dinamicamente
+    if (baseKey && PRICING_DATA.bases[baseKey]) {
+      const priceEl = card.querySelector('.option-card-price');
+      if (priceEl) priceEl.textContent = formatCurrency(PRICING_DATA.bases[baseKey].price).replace(',00', '');
+    }
+
     if (baseKey === state.selectedBase) {
       card.classList.add('selected');
       if (radio) radio.checked = true;
@@ -185,10 +212,16 @@ function updateUI() {
     }
   });
 
-  // 2. Atualiza os cards de módulos normais
+  // 2. Atualiza labels de preço nos cards de Módulos conforme salvo no Admin
   document.querySelectorAll('.module-card[data-module]').forEach((card) => {
     const modKey = card.getAttribute('data-module');
     const checkbox = card.querySelector('input[type="checkbox"]');
+
+    if (modKey && PRICING_DATA.modules[modKey]) {
+      const badgeEl = card.querySelector('.module-price-badge');
+      if (badgeEl) badgeEl.textContent = `+ ${formatCurrency(PRICING_DATA.modules[modKey].price)}`;
+    }
+
     if (state.selectedModules.has(modKey)) {
       card.classList.add('selected');
       if (checkbox) checkbox.checked = true;
@@ -202,6 +235,11 @@ function updateUI() {
   const extraPagesCard = document.querySelector('.module-extra-pages');
   const extraPagesCheckbox = document.getElementById('chk-extra-pages');
   const counterValueEl = document.getElementById('extra-pages-count');
+  const extraPriceBadgeEl = document.querySelector('.module-extra-pages .module-price-badge');
+
+  if (extraPriceBadgeEl && PRICING_DATA.extraPageUnitPrice) {
+    extraPriceBadgeEl.textContent = `+ ${formatCurrency(PRICING_DATA.extraPageUnitPrice)} / página`;
+  }
 
   if (counterValueEl) {
     counterValueEl.textContent = state.extraPagesCount;
@@ -221,6 +259,12 @@ function updateUI() {
   document.querySelectorAll('.maintenance-card[data-maintenance]').forEach((card) => {
     const maintKey = card.getAttribute('data-maintenance');
     const radio = card.querySelector('input[type="radio"]');
+
+    if (maintKey && PRICING_DATA.maintenance[maintKey]) {
+      const priceEl = card.querySelector('.maintenance-price');
+      if (priceEl) priceEl.textContent = formatCurrency(PRICING_DATA.maintenance[maintKey].price).replace(',00', '');
+    }
+
     if (maintKey === state.selectedMaintenance) {
       card.classList.add('selected');
       if (radio) radio.checked = true;
@@ -308,7 +352,7 @@ function renderSummaryItemsList(totals) {
 }
 
 // ==========================================================================
-// 6. Manipulação de Eventos da Calculadora
+// 5. Manipulação de Eventos da Calculadora
 // ==========================================================================
 function setupCalculatorEvents() {
   // Clique na Estrutura Base
@@ -396,7 +440,6 @@ function setupCalculatorEvents() {
         state.selectedMaintenance = planKey;
         updateUI();
 
-        // Rola até a calculadora
         const calcSection = document.getElementById('calculadora');
         if (calcSection) {
           calcSection.scrollIntoView({ behavior: 'smooth' });
@@ -408,8 +451,24 @@ function setupCalculatorEvents() {
 }
 
 // ==========================================================================
-// 7. Formulário de Lead e Envio via WhatsApp
+// 6. Formulário de Lead, Histórico para o Admin e Envio WhatsApp
 // ==========================================================================
+function saveLeadToStorage(leadData) {
+  try {
+    const existing = JSON.parse(localStorage.getItem('webcraft_leads') || '[]');
+    const newLead = {
+      id: 'LEAD-' + Math.floor(1000 + Math.random() * 9000),
+      date: new Date().toISOString(),
+      ...leadData,
+      status: 'novo'
+    };
+    existing.unshift(newLead);
+    localStorage.setItem('webcraft_leads', JSON.stringify(existing));
+  } catch (e) {
+    console.error("Erro ao salvar lead no histórico local:", e);
+  }
+}
+
 function setupLeadForm() {
   const inputName = document.getElementById('lead-name');
   const inputCompany = document.getElementById('lead-company');
@@ -470,10 +529,27 @@ function setupLeadForm() {
       state.clientCompany = companyVal || "Não informada";
       state.clientPhone = phoneVal;
 
+      const totals = calculateTotals();
+
+      // Salva o lead no localStorage para o Painel Admin WebCraft
+      saveLeadToStorage({
+        clientName: nameVal,
+        clientCompany: companyVal || "Não informada",
+        clientPhone: phoneVal,
+        baseName: totals.baseInfo.name,
+        basePrice: totals.baseInfo.price,
+        modules: Array.from(state.selectedModules).map(k => PRICING_DATA.modules[k]?.name).filter(Boolean),
+        extraPages: state.extraPagesCount,
+        maintenanceName: totals.maintInfo.name,
+        maintenancePrice: totals.maintenanceTotal,
+        total: totals.initialTotal
+      });
+
       // Gera mensagem formatada
       const message = generateWhatsAppMessage();
 
-      // Monta URL oficial da API do WhatsApp
+      // Monta URL oficial da API do WhatsApp com o telefone ativo do Admin
+      CONFIG = getActiveConfig();
       const cleanTargetPhone = CONFIG.whatsappPhone.replace(/\D/g, '');
       const waUrl = `https://wa.me/${cleanTargetPhone}?text=${encodeURIComponent(message)}`;
 
@@ -557,7 +633,7 @@ function generateWhatsAppMessage() {
 }
 
 // ==========================================================================
-// 8. FAQ Accordion & Busca / Filtros
+// 7. FAQ Accordion & Busca / Filtros
 // ==========================================================================
 function setupFAQ() {
   const faqItems = document.querySelectorAll('.faq-item');
@@ -571,7 +647,6 @@ function setupFAQ() {
       questionBtn.addEventListener('click', () => {
         const isActive = item.classList.contains('active');
 
-        // Fecha todos os outros itens
         faqItems.forEach((other) => {
           if (other !== item) {
             other.classList.remove('active');
@@ -580,7 +655,6 @@ function setupFAQ() {
           }
         });
 
-        // Alterna o atual
         if (!isActive) {
           item.classList.add('active');
           answer.style.maxHeight = answer.scrollHeight + 30 + "px";
@@ -642,7 +716,7 @@ function setupFAQ() {
 }
 
 // ==========================================================================
-// 9. Gerenciador de Telas (Screen Switcher para as 3 Telas do Sistema)
+// 8. Gerenciador de Telas (Screen Switcher)
 // ==========================================================================
 function switchScreen(screenName, updateHistory = true) {
   const validScreens = ['inicio', 'calculadora', 'duvidas'];
@@ -660,7 +734,6 @@ function switchScreen(screenName, updateHistory = true) {
     }
   }
 
-  // Atualiza botões e links de navegação ativos
   document.querySelectorAll('[data-screen-target]').forEach(link => {
     if (link.getAttribute('data-screen-target') === targetScreen) {
       link.classList.add('active');
@@ -669,15 +742,12 @@ function switchScreen(screenName, updateHistory = true) {
     }
   });
 
-  // Atualiza o estado da calculadora caso a tela seja 'calculadora'
   if (targetScreen === 'calculadora') {
     updateUI();
   }
 
-  // Rola suavemente até o topo da tela
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Sincroniza hash da URL sem causar refresh
   if (updateHistory) {
     history.pushState(null, '', `#${targetScreen}`);
   }
@@ -685,9 +755,8 @@ function switchScreen(screenName, updateHistory = true) {
 
 function initScreenRouting() {
   const screens = document.querySelectorAll('.app-screen');
-  if (screens.length === 0) return; // Se for uma página individual estática, não precisa do switcher
+  if (screens.length === 0) return;
 
-  // Identifica hash inicial na URL (ex: #calculadora, #duvidas, #inicio)
   const initialHash = window.location.hash.replace('#', '').toLowerCase();
   if (initialHash === 'calculadora' || initialHash === 'planos') {
     switchScreen('calculadora', false);
@@ -697,7 +766,6 @@ function initScreenRouting() {
     switchScreen('inicio', false);
   }
 
-  // Listener para navegação pelo histórico do navegador (botões Voltar/Avançar)
   window.addEventListener('hashchange', () => {
     const currentHash = window.location.hash.replace('#', '').toLowerCase();
     if (currentHash === 'calculadora' || currentHash === 'planos') {
@@ -709,14 +777,12 @@ function initScreenRouting() {
     }
   });
 
-  // Event listener para todos os links com data-screen-target
   document.querySelectorAll('[data-screen-target]').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const target = link.getAttribute('data-screen-target');
       switchScreen(target, true);
 
-      // Fecha menu mobile se estiver aberto
       const mobileNav = document.querySelector('.nav-mobile');
       const toggleBtn = document.querySelector('.mobile-toggle');
       if (mobileNav && mobileNav.classList.contains('show')) {
@@ -726,7 +792,6 @@ function initScreenRouting() {
     });
   });
 
-  // Event listener para links que trocam de tela E rolam para uma seção específica (ex: #como-funciona)
   document.querySelectorAll('[data-scroll-to]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -752,7 +817,7 @@ function initScreenRouting() {
 }
 
 // ==========================================================================
-// 10. Toast Notification
+// 9. Toast Notification
 // ==========================================================================
 let toastTimeout = null;
 
@@ -786,7 +851,7 @@ function showToast(message, type = "info") {
 }
 
 // ==========================================================================
-// 11. Header Scrolled & Menu Mobile
+// 10. Header Scrolled & Menu Mobile
 // ==========================================================================
 function setupNavigation() {
   const header = document.querySelector('.header');
@@ -817,7 +882,7 @@ function setupNavigation() {
 }
 
 // ==========================================================================
-// 12. Inicialização Geral no DOMContentLoaded
+// 11. Inicialização Geral
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   setupNavigation();
