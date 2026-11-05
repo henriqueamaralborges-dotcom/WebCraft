@@ -636,6 +636,93 @@
             </form>
           </div>
 
+          <!-- BANCO DE DADOS FIREBASE (CLOUD FIRESTORE) -->
+          <div class="admin-card">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--admin-border); padding-bottom: 12px;">
+              <h3 class="admin-card-title" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none;">
+                <i class="fa-solid fa-fire" style="color: #F59E0B;"></i>
+                Banco de Dados em Nuvem (Firebase Cloud Firestore)
+              </h3>
+              <div id="firebase-status-badge" class="badge-status" style="background-color: rgba(245, 158, 11, 0.15); color: var(--amber-500); display: inline-flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-circle" style="font-size: 0.5rem;"></i>
+                <span id="firebase-status-text">Verificando conexão...</span>
+              </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">
+              Conecte seu banco de dados Firebase para que todos os clientes que se cadastrarem no site apareçam instantaneamente no seu painel em tempo real, mesmo em computadores ou celulares diferentes.
+            </p>
+
+            <form id="form-firebase" style="display: flex; flex-direction: column; gap: 16px;">
+              <!-- Opção 1: Colar objeto firebaseConfig do Console -->
+              <div class="input-group">
+                <label class="input-label" for="firebase-raw-json">
+                  Cole seu <strong>firebaseConfig</strong> completo do Firebase Console (Recomendado):
+                </label>
+                <textarea id="firebase-raw-json" class="admin-input" style="height: 110px; font-family: monospace; font-size: 0.8rem; line-height: 1.4; padding: 10px;" placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "seu-projeto.firebaseapp.com",
+  projectId: "seu-projeto",
+  storageBucket: "seu-projeto.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef"
+};'></textarea>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">
+                  Você pode colar o código inteiro ou preencher os campos detalhados abaixo.
+                </span>
+              </div>
+
+              <!-- Opção 2: Campos Individuais -->
+              <div class="pricing-edit-grid">
+                <div class="input-group">
+                  <label class="input-label" for="fb-apiKey">API Key (apiKey)</label>
+                  <input type="text" id="fb-apiKey" class="admin-input" placeholder="AIzaSy...">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="fb-projectId">Project ID (projectId)</label>
+                  <input type="text" id="fb-projectId" class="admin-input" placeholder="webcraft-12345">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="fb-authDomain">Auth Domain (authDomain)</label>
+                  <input type="text" id="fb-authDomain" class="admin-input" placeholder="webcraft.firebaseapp.com">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="fb-appId">App ID (appId)</label>
+                  <input type="text" id="fb-appId" class="admin-input" placeholder="1:123456:web:abcd">
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <button type="submit" class="btn-admin-primary">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <span>Salvar e Conectar com Firebase</span>
+                </button>
+
+                <button type="button" class="btn-admin-secondary" id="btn-disconnect-firebase">
+                  <i class="fa-solid fa-power-off"></i>
+                  <span>Desconectar Firebase (Usar Local)</span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Passo a Passo Rápido de Configuração Gratuita -->
+            <div style="margin-top: 22px; background-color: var(--admin-surface-card); border: 1px dashed var(--admin-border); border-radius: var(--radius-md); padding: 16px 20px;">
+              <h4 style="font-size: 0.85rem; color: var(--text-white); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-regular fa-circle-question" style="color: var(--indigo-400);"></i>
+                Como criar seu banco gratuito no Firebase em 3 minutos:
+              </h4>
+              <ol style="font-size: 0.8rem; color: var(--text-muted); padding-left: 20px; line-height: 1.6;">
+                <li>Acesse <strong><a href="https://console.firebase.google.com/" target="_blank" style="color: var(--indigo-400); text-decoration: underline;">console.firebase.google.com</a></strong> com sua conta Google e clique em <em>Adicionar Projeto</em>;</li>
+                <li>No menu lateral, vá em <strong>Build ➔ Firestore Database</strong> e clique em <em>Criar Banco de Dados</em> (escolha o modo de teste ou configure as regras para leitura/escrita);</li>
+                <li>Vá nas <strong>Configurações do Projeto ⚙️</strong> (ícone de engrenagem) ➔ role até <em>Seus aplicativos</em> ➔ clique no ícone Web <strong>&lt;/&gt;</strong>;</li>
+                <li>Copie o bloco <strong>firebaseConfig</strong> e cole no campo acima! Pronto, seu site e painel estarão conectados na nuvem com dados em tempo real.</li>
+              </ol>
+            </div>
+          </div>
+
           <!-- Alterar Senha de Acesso -->
           <div class="admin-card">
             <h3 class="admin-card-title">
@@ -772,7 +859,10 @@
 
   <div id="admin-toast" class="admin-toast"></div>
 
-  <!-- Script do Admin -->
+  <!-- Scripts Firebase & Painel Admin -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="../firebase-service.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

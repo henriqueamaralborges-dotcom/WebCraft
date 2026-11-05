@@ -67,17 +67,24 @@ O painel administrativo está localizado na subpasta `/admin/` dentro deste mesm
 - **Credenciais padrão:** Usuário `admin` / Senha `webcraft2026`
 - ⚠️ **Altere a senha no primeiro acesso** no menu de Configurações do painel.
 
-### Integração Instantânea via localStorage
+### Integração em Tempo Real via Firebase Cloud Firestore
 
-Como o site e o painel estão no mesmo repositório e sob o mesmo domínio, o **localStorage é compartilhado perfeitamente**:
+O WebCraft conta com integração oficial com o **Google Firebase (Cloud Firestore)**. Com isso, os clientes podem acessar o site de qualquer lugar do mundo (celular, tablet ou computador) e as informações caem instantaneamente no seu painel de administração em tempo real.
 
-| Chave | Conteúdo |
-|-------|----------|
-| `webcraft_pricing` | Preços customizados (lidos pela calculadora do site) |
-| `webcraft_discounts` | Regras de descontos ativos (% na criação, manutenção e texto promocional) |
-| `webcraft_config` | Configurações gerais (WhatsApp comercial, e-mail) |
-| `webcraft_admin_auth` | Credenciais de acesso ao painel |
-| `webcraft_leads` | Histórico de pessoas cadastradas (Nome, WhatsApp, CPF, CEP, Estrutura, Adições e Plano) |
+| Recurso | Coleção Firestore | Sincronização |
+|---------|-------------------|---------------|
+| **Pessoas Cadastradas / Leads** | `leads` | Tempo Real (`onSnapshot`) com notificação na tela |
+| **Tabela de Preços** | `settings/pricing` | Sincroniza alterações para a calculadora do site |
+| **Descontos & Promoções** | `settings/discounts` | Ativa/desativa descontos para todos os visitantes |
+| **Configurações Gerais** | `settings/general` | WhatsApp de destino e e-mail comercial |
+
+> 💡 **Fallback Automático (Offline):** Caso o Firebase ainda não tenha sido conectado, o sistema opera de forma transparente via `localStorage` sem travar nenhuma função.
+
+#### Como Conectar seu Banco de Dados Firebase:
+1. Acesse o **Firebase Console** em [console.firebase.google.com](https://console.firebase.google.com/) com sua conta Google e clique em **Criar Projeto**;
+2. No menu lateral, acesse **Firestore Database** e clique em **Criar Banco de Dados** (escolha *Modo de Teste* ou configure as regras para leitura/escrita pública);
+3. Nas **Configurações do Projeto ⚙️**, role até *Seus Aplicativos* e clique no ícone Web **&lt;/&gt;** para gerar seu `firebaseConfig`;
+4. Abra o seu **Painel Admin ➔ Configurações ➔ Banco de Dados Firebase**, cole o bloco de código e clique em **Salvar e Conectar**. Pronto!
 
 ---
 
@@ -99,10 +106,12 @@ WebCraft-/
 ├── duvidas.html        # Página standalone das dúvidas
 ├── styles.css          # Estilos do site (design system completo)
 ├── app.js              # Lógica do site (calculadora, FAQ, navegação)
-├── admin/              # 🔐 Painel Administrativo com URL própria
+├── firebase-service.js # 🔥 Serviço de Banco de Dados Firebase (Cloud Firestore)
+├── admin/              # 🔐 Painel Administrativo com URL própria (/admin/)
 │   ├── index.html      # Tela de login e dashboard do admin
 │   ├── admin.css       # Estilos do painel admin (tema escuro)
 │   └── admin.js        # Lógica do admin (auth, preços, leads, exportação)
+├── .github/workflows/  # Automação de deploy e exibição de links
 ├── .gitignore          # Exclusões do Git
 └── README.md           # Esta documentação
 ```

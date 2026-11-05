@@ -1,5 +1,5 @@
 /**
- * WebCraft - Script do Painel Administrativo (Controle de Acesso, Edição de Preços, Descontos e Pessoas Cadastradas)
+ * WebCraft - Script do Painel Administrativo (Controle de Acesso, Edição de Preços, Descontos, Firebase e Pessoas Cadastradas)
  */
 
 // ==========================================================================
@@ -196,7 +196,7 @@ function setupAuth() {
 }
 
 // ==========================================================================
-// 4. Edição de Preços em Tempo Real
+// 4. Edição de Preços em Tempo Real (Sincronizado na Nuvem)
 // ==========================================================================
 function populatePricingForm() {
   const pricing = getStoredPricing();
@@ -229,7 +229,7 @@ function setupPricingActions() {
   const btnResetPricing = document.getElementById('btn-reset-pricing');
 
   if (formPricing) {
-    formPricing.addEventListener('submit', (e) => {
+    formPricing.addEventListener('submit', async (e) => {
       e.preventDefault();
       const currentPricing = getStoredPricing();
 
@@ -255,26 +255,35 @@ function setupPricingActions() {
         }
       });
 
-      localStorage.setItem('webcraft_pricing', JSON.stringify(currentPricing));
+      // Salva no LocalStorage e no Firebase Firestore
+      if (typeof dbSavePricing === 'function') {
+        await dbSavePricing(currentPricing);
+      } else {
+        localStorage.setItem('webcraft_pricing', JSON.stringify(currentPricing));
+      }
+
       updateDiscountPreview();
-      showToast("✅ Preços atualizados com sucesso no site!", "success");
+      showToast("✅ Preços salvos e sincronizados com sucesso!", "success");
     });
   }
 
   if (btnResetPricing) {
-    btnResetPricing.addEventListener('click', () => {
+    btnResetPricing.addEventListener('click', async () => {
       if (confirm("Deseja restaurar todos os preços originais de fábrica?")) {
         localStorage.removeItem('webcraft_pricing');
+        if (typeof dbSavePricing === 'function') {
+          await dbSavePricing(DEFAULT_PRICING);
+        }
         populatePricingForm();
         updateDiscountPreview();
-        showToast("Preços restaurados para o padrão.");
+        showToast("Preços restaurados para o padrão original.");
       }
     });
   }
 }
 
 // ==========================================================================
-// 5. Gestão de Descontos & Promoções
+// 5. Gestão de Descontos & Promoções (Sincronizado na Nuvem)
 // ==========================================================================
 function populateDiscountsForm() {
   const discounts = getStoredDiscounts();
@@ -340,7 +349,7 @@ function setupDiscountsActions() {
   if (inputGlobal) inputGlobal.addEventListener('input', updateDiscountPreview);
 
   if (formDiscounts) {
-    formDiscounts.addEventListener('submit', (e) => {
+    formDiscounts.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const active = document.getElementById('discount-active-toggle')?.checked || false;
@@ -355,11 +364,16 @@ function setupDiscountsActions() {
         promoText
       };
 
-      localStorage.setItem('webcraft_discounts', JSON.stringify(discountsData));
+      if (typeof dbSaveDiscounts === 'function') {
+        await dbSaveDiscounts(discountsData);
+      } else {
+        localStorage.setItem('webcraft_discounts', JSON.stringify(discountsData));
+      }
+
       updateDiscountPreview();
 
       if (active && globalPercent > 0) {
-        showToast(`🎉 Promoção de ${globalPercent}% ativada com sucesso no site!`, "success");
+        showToast(`🎉 Promoção de ${globalPercent}% sincronizada e ativa no site!`, "success");
       } else if (!active) {
         showToast("Descontos desativados no site.", "info");
       } else {
@@ -369,10 +383,14 @@ function setupDiscountsActions() {
   }
 
   if (btnResetDiscounts) {
-    btnResetDiscounts.addEventListener('click', () => {
+    btnResetDiscounts.addEventListener('click', async () => {
       if (confirm("Deseja desativar e zerar todos os descontos aplicados no site?")) {
         const resetData = { ...DEFAULT_DISCOUNTS };
-        localStorage.setItem('webcraft_discounts', JSON.stringify(resetData));
+        if (typeof dbSaveDiscounts === 'function') {
+          await dbSaveDiscounts(resetData);
+        } else {
+          localStorage.setItem('webcraft_discounts', JSON.stringify(resetData));
+        }
         populateDiscountsForm();
         showToast("Todos os descontos foram removidos.");
       }
@@ -381,13 +399,16 @@ function setupDiscountsActions() {
 }
 
 // ==========================================================================
-// 6. Gestão de Pessoas Cadastradas & Pedidos (Leads com CPF e CEP)
+// 6. Gestão de Pessoas Cadastradas & Pedidos (Tempo Real com Firebase)
 // ==========================================================================
+let currentLeadsCache = [];
+let hasInitialLeadsLoaded = false;
+
 function renderLeadsTable(searchTerm = "") {
   const tbody = document.getElementById('leads-table-body');
   if (!tbody) return;
 
-  const leads = getStoredLeads();
+  const leads = currentLeadsCache.length > 0 ? currentLeadsCache : getStoredLeads();
   const term = searchTerm.toLowerCase().trim();
 
   const filtered = leads.filter(item => {
@@ -423,7 +444,6 @@ function renderLeadsTable(searchTerm = "") {
     const cpfDisplay = lead.clientCpf || '<span style="color:#6B7280;">Não informado</span>';
     const cepDisplay = lead.clientCep || '<span style="color:#6B7280;">-</span>';
 
-    // Formata a lista de módulos em badges
     const modulesHtml = (lead.modules && lead.modules.length > 0)
       ? lead.modules.map(m => `<span class="module-chip">${m}</span>`).join('')
       : '<span style="font-size: 0.75rem; color: var(--text-muted);">Nenhum adicional</span>';
@@ -432,7 +452,6 @@ function renderLeadsTable(searchTerm = "") {
       ? `<span class="module-chip extra-page">+${lead.extraPages} página(s)</span>`
       : '';
 
-    // Valor com ou sem desconto
     let priceHtml = `<strong style="color: var(--emerald-400);">${formatCurrency(lead.total)}</strong>`;
     if (lead.discountAmount && lead.discountAmount > 0) {
       priceHtml = `
@@ -505,7 +524,7 @@ function renderLeadsTable(searchTerm = "") {
 }
 
 window.openLeadModal = function(leadId) {
-  const leads = getStoredLeads();
+  const leads = currentLeadsCache.length > 0 ? currentLeadsCache : getStoredLeads();
   const lead = leads.find(l => l.id === leadId);
   if (!lead) return;
 
@@ -560,22 +579,34 @@ window.closeLeadModal = function() {
   if (modal) modal.classList.remove('show');
 };
 
-window.updateLeadStatus = function(leadId, newStatus) {
-  const leads = getStoredLeads();
-  const index = leads.findIndex(l => l.id === leadId);
-  if (index !== -1) {
-    leads[index].status = newStatus;
-    localStorage.setItem('webcraft_leads', JSON.stringify(leads));
-    showToast("Status do cadastro atualizado!");
-    updateDashboardMetrics();
+window.updateLeadStatus = async function(leadId, newStatus) {
+  if (typeof dbUpdateLeadStatus === 'function') {
+    await dbUpdateLeadStatus(leadId, newStatus);
+  } else {
+    const leads = getStoredLeads();
+    const index = leads.findIndex(l => l.id === leadId);
+    if (index !== -1) {
+      leads[index].status = newStatus;
+      localStorage.setItem('webcraft_leads', JSON.stringify(leads));
+    }
   }
+
+  showToast("Status do cadastro atualizado!");
+  updateDashboardMetrics();
 };
 
-window.deleteLead = function(leadId) {
-  if (confirm("Deseja realmente remover este cadastro do histórico?")) {
-    let leads = getStoredLeads();
-    leads = leads.filter(l => l.id !== leadId);
-    localStorage.setItem('webcraft_leads', JSON.stringify(leads));
+window.deleteLead = async function(leadId) {
+  if (confirm("Deseja realmente remover este cadastro?")) {
+    if (typeof dbDeleteLead === 'function') {
+      await dbDeleteLead(leadId);
+    } else {
+      let leads = getStoredLeads();
+      leads = leads.filter(l => l.id !== leadId);
+      localStorage.setItem('webcraft_leads', JSON.stringify(leads));
+    }
+
+    // Atualiza cache local
+    currentLeadsCache = currentLeadsCache.filter(l => l.id !== leadId);
     renderLeadsTable();
     updateDashboardMetrics();
     showToast("Cadastro removido com sucesso.");
@@ -594,7 +625,7 @@ function setupLeadsActions() {
 
   if (btnExportCsv) {
     btnExportCsv.addEventListener('click', () => {
-      const leads = getStoredLeads();
+      const leads = currentLeadsCache.length > 0 ? currentLeadsCache : getStoredLeads();
       if (leads.length === 0) {
         showToast("Não há pessoas cadastradas para exportar.", "warning");
         return;
@@ -623,7 +654,7 @@ function setupLeadsActions() {
 // 7. Métricas do Dashboard
 // ==========================================================================
 function updateDashboardMetrics() {
-  const leads = getStoredLeads();
+  const leads = currentLeadsCache.length > 0 ? currentLeadsCache : getStoredLeads();
 
   const totalLeadsEl = document.getElementById('metric-total-leads');
   const totalValueEl = document.getElementById('metric-total-value');
@@ -643,7 +674,7 @@ function updateDashboardMetrics() {
 }
 
 // ==========================================================================
-// 8. Configurações Gerais e Alteração de Senha
+// 8. Configurações Gerais & Integração com Firebase
 // ==========================================================================
 function populateSettingsForm() {
   const config = getStoredConfig();
@@ -652,14 +683,164 @@ function populateSettingsForm() {
 
   if (inputPhone) inputPhone.value = config.whatsappPhone;
   if (inputEmail) inputEmail.value = config.contactEmail;
+
+  populateFirebaseForm();
+}
+
+function populateFirebaseForm() {
+  if (typeof getFirebaseConfig !== 'function') return;
+
+  const fbConfig = getFirebaseConfig();
+  const inputApiKey = document.getElementById('fb-apiKey');
+  const inputProjectId = document.getElementById('fb-projectId');
+  const inputAuthDomain = document.getElementById('fb-authDomain');
+  const inputAppId = document.getElementById('fb-appId');
+
+  if (inputApiKey) inputApiKey.value = fbConfig.apiKey || "";
+  if (inputProjectId) inputProjectId.value = fbConfig.projectId || "";
+  if (inputAuthDomain) inputAuthDomain.value = fbConfig.authDomain || "";
+  if (inputAppId) inputAppId.value = fbConfig.appId || "";
+
+  updateFirebaseStatusBadge();
+}
+
+function updateFirebaseStatusBadge() {
+  const statusBadge = document.getElementById('firebase-status-badge');
+  const statusText = document.getElementById('firebase-status-text');
+  if (!statusBadge || !statusText) return;
+
+  if (typeof getFirebaseStatus !== 'function') {
+    statusBadge.style.backgroundColor = "rgba(107, 114, 128, 0.2)";
+    statusBadge.style.color = "#9CA3AF";
+    statusText.textContent = "Serviço Indisponível";
+    return;
+  }
+
+  const status = getFirebaseStatus();
+
+  if (status.isConnected) {
+    statusBadge.style.backgroundColor = "rgba(16, 185, 129, 0.15)";
+    statusBadge.style.color = "var(--emerald-400)";
+    statusText.innerHTML = `<i class="fa-solid fa-cloud" style="margin-right: 4px;"></i> Conectado ao Firebase (${status.projectId})`;
+  } else if (status.hasConfig) {
+    statusBadge.style.backgroundColor = "rgba(245, 158, 11, 0.15)";
+    statusBadge.style.color = "var(--amber-500)";
+    statusText.innerHTML = `<i class="fa-solid fa-triangle-exclamation" style="margin-right: 4px;"></i> Chaves configuradas (Aguardando resposta)`;
+  } else {
+    statusBadge.style.backgroundColor = "rgba(107, 114, 128, 0.2)";
+    statusBadge.style.color = "#9CA3AF";
+    statusText.innerHTML = `<i class="fa-solid fa-database" style="margin-right: 4px;"></i> Modo Local / Offline (LocalStorage)`;
+  }
+}
+
+function parseFirebaseSnippet(rawSnippet) {
+  if (!rawSnippet || typeof rawSnippet !== 'string') return null;
+
+  const result = {};
+
+  const apiKeyMatch = rawSnippet.match(/apiKey\s*:\s*["']([^"']+)["']/i);
+  const projectIdMatch = rawSnippet.match(/projectId\s*:\s*["']([^"']+)["']/i);
+  const authDomainMatch = rawSnippet.match(/authDomain\s*:\s*["']([^"']+)["']/i);
+  const storageBucketMatch = rawSnippet.match(/storageBucket\s*:\s*["']([^"']+)["']/i);
+  const messagingMatch = rawSnippet.match(/messagingSenderId\s*:\s*["']([^"']+)["']/i);
+  const appIdMatch = rawSnippet.match(/appId\s*:\s*["']([^"']+)["']/i);
+
+  if (apiKeyMatch) result.apiKey = apiKeyMatch[1];
+  if (projectIdMatch) result.projectId = projectIdMatch[1];
+  if (authDomainMatch) result.authDomain = authDomainMatch[1];
+  if (storageBucketMatch) result.storageBucket = storageBucketMatch[1];
+  if (messagingMatch) result.messagingSenderId = messagingMatch[1];
+  if (appIdMatch) result.appId = appIdMatch[1];
+
+  // Tenta JSON puro caso o usuário tenha colado apenas { "apiKey": "..." }
+  if (Object.keys(result).length === 0) {
+    try {
+      const parsed = JSON.parse(rawSnippet);
+      if (parsed.apiKey && parsed.projectId) return parsed;
+    } catch (e) {}
+  }
+
+  return Object.keys(result).length > 0 ? result : null;
+}
+
+function setupFirebaseActions() {
+  const formFirebase = document.getElementById('form-firebase');
+  const btnDisconnect = document.getElementById('btn-disconnect-firebase');
+  const textareaRaw = document.getElementById('firebase-raw-json');
+
+  // Parser automático ao colar no textarea
+  if (textareaRaw) {
+    textareaRaw.addEventListener('input', (e) => {
+      const parsed = parseFirebaseSnippet(e.target.value);
+      if (parsed) {
+        if (parsed.apiKey) document.getElementById('fb-apiKey').value = parsed.apiKey;
+        if (parsed.projectId) document.getElementById('fb-projectId').value = parsed.projectId;
+        if (parsed.authDomain) document.getElementById('fb-authDomain').value = parsed.authDomain;
+        if (parsed.appId) document.getElementById('fb-appId').value = parsed.appId;
+        showToast("✨ Chaves do Firebase extraídas com sucesso!", "info");
+      }
+    });
+  }
+
+  if (formFirebase) {
+    formFirebase.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let configToSave = {};
+      const rawText = textareaRaw ? textareaRaw.value.trim() : "";
+      const parsedFromRaw = parseFirebaseSnippet(rawText);
+
+      if (parsedFromRaw) {
+        configToSave = parsedFromRaw;
+      } else {
+        configToSave = {
+          apiKey: document.getElementById('fb-apiKey')?.value.trim() || "",
+          projectId: document.getElementById('fb-projectId')?.value.trim() || "",
+          authDomain: document.getElementById('fb-authDomain')?.value.trim() || "",
+          appId: document.getElementById('fb-appId')?.value.trim() || "",
+          storageBucket: `${document.getElementById('fb-projectId')?.value.trim()}.appspot.com`
+        };
+      }
+
+      if (!configToSave.apiKey || !configToSave.projectId) {
+        showToast("⚠️ Por favor, informe pelo menos a apiKey e o projectId do Firebase.", "warning");
+        return;
+      }
+
+      if (typeof saveFirebaseConfig === 'function') {
+        const success = saveFirebaseConfig(configToSave);
+        populateFirebaseForm();
+
+        if (success) {
+          showToast("🔥 Conexão com Firebase estabelecida com sucesso!", "success");
+          startLeadsRealtimeSync();
+        } else {
+          showToast("Configurações salvas. Tentando conectar...", "info");
+        }
+      }
+    });
+  }
+
+  if (btnDisconnect) {
+    btnDisconnect.addEventListener('click', () => {
+      if (confirm("Deseja desconectar o Firebase e voltar a operar somente via LocalStorage?")) {
+        localStorage.removeItem('webcraft_firebase_config');
+        if (textareaRaw) textareaRaw.value = "";
+        populateFirebaseForm();
+        showToast("Firebase desconectado. Modo Local ativo.");
+      }
+    });
+  }
 }
 
 function setupSettingsActions() {
   const formSettings = document.getElementById('form-settings');
   const formPassword = document.getElementById('form-password');
 
+  setupFirebaseActions();
+
   if (formSettings) {
-    formSettings.addEventListener('submit', (e) => {
+    formSettings.addEventListener('submit', async (e) => {
       e.preventDefault();
       const phoneVal = document.getElementById('config-whatsapp-phone').value.replace(/\D/g, '');
       const emailVal = document.getElementById('config-contact-email').value.trim();
@@ -673,7 +854,12 @@ function setupSettingsActions() {
       config.whatsappPhone = phoneVal;
       config.contactEmail = emailVal;
 
-      localStorage.setItem('webcraft_config', JSON.stringify(config));
+      if (typeof dbSaveConfig === 'function') {
+        await dbSaveConfig(config);
+      } else {
+        localStorage.setItem('webcraft_config', JSON.stringify(config));
+      }
+
       showToast("Configurações salvas com sucesso!", "success");
     });
   }
@@ -772,14 +958,40 @@ function showToast(message, type = "info") {
 }
 
 // ==========================================================================
-// 11. Inicialização
+// 11. Sincronização em Tempo Real (Firebase Listeners)
+// ==========================================================================
+function startLeadsRealtimeSync() {
+  if (typeof dbListenLeads === 'function') {
+    dbListenLeads((leads, isFromCloud) => {
+      const previousCount = currentLeadsCache.length;
+      currentLeadsCache = leads;
+
+      renderLeadsTable();
+      updateDashboardMetrics();
+      updateFirebaseStatusBadge();
+
+      // Notificação se um novo lead chegou via nuvem enquanto o admin está aberto
+      if (hasInitialLeadsLoaded && isFromCloud && leads.length > previousCount) {
+        const newest = leads[0];
+        showToast(`🔔 Novo cliente cadastrado: ${newest.clientName}!`, "success");
+      }
+      hasInitialLeadsLoaded = true;
+    });
+  } else {
+    currentLeadsCache = getStoredLeads();
+    renderLeadsTable();
+    updateDashboardMetrics();
+  }
+}
+
+// ==========================================================================
+// 12. Inicialização do Painel
 // ==========================================================================
 function initDashboard() {
-  updateDashboardMetrics();
   populatePricingForm();
   populateDiscountsForm();
-  renderLeadsTable();
   populateSettingsForm();
+  startLeadsRealtimeSync();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

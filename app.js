@@ -552,7 +552,16 @@ function setupCalculatorEvents() {
 // ==========================================================================
 // 6. Formulário de Lead, Histórico para o Admin e Envio WhatsApp
 // ==========================================================================
-function saveLeadToStorage(leadData) {
+async function saveLeadToStorage(leadData) {
+  // Salva no Firebase Cloud Firestore (se configurado) e no LocalStorage
+  if (typeof dbSaveLead === 'function') {
+    try {
+      return await dbSaveLead(leadData);
+    } catch (e) {
+      console.warn("Falha ao salvar via dbSaveLead, usando fallback local:", e);
+    }
+  }
+
   try {
     const existing = JSON.parse(localStorage.getItem('webcraft_leads') || '[]');
     const newLead = {
@@ -563,6 +572,7 @@ function saveLeadToStorage(leadData) {
     };
     existing.unshift(newLead);
     localStorage.setItem('webcraft_leads', JSON.stringify(existing));
+    return newLead;
   } catch (e) {
     console.error("Erro ao salvar lead no histórico local:", e);
   }
@@ -1048,5 +1058,20 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCalculatorEvents();
   setupLeadForm();
   setupFAQ();
+
+  // Sincronização em tempo real com o Firebase (se conectado)
+  if (typeof dbListenPricing === 'function') {
+    dbListenPricing((updatedPricing) => {
+      PRICING_DATA = updatedPricing;
+      updateUI();
+    });
+  }
+
+  if (typeof dbListenDiscounts === 'function') {
+    dbListenDiscounts((updatedDiscounts) => {
+      updateUI();
+    });
+  }
+});
   updateUI();
 });
