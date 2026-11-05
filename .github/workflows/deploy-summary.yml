@@ -1,0 +1,25 @@
+name: Links de Acesso WebCraft
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exibir-urls:
+    name: Gerar URLs de Acesso
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publicar URLs no Resumo da Execucao
+        run: |
+          echo "## 🚀 WebCraft — Links Gerados no GitHub Pages" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Recurso | URL Direta | Descrição |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 **Site Principal** | [https://henriqueamaralborges-dotcom.github.io/WebCraft/](https://henriqueamaralborges-dotcom.github.io/WebCraft/) | Landing page com calculadora interativa |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔐 **Painel Administrativo** | [https://henriqueamaralborges-dotcom.github.io/WebCraft/admin/](https://henriqueamaralborges-dotcom.github.io/WebCraft/admin/) | Gestão de preços, leads e orçamentos |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "> 💡 **Dica de Acesso:** Salve o link do Painel Admin nos seus favoritos. Credenciais iniciais: \`admin\` / \`webcraft2026\`." >> $GITHUB_STEP_SUMMARY
