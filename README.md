@@ -55,53 +55,28 @@ O sistema foi estruturado em **3 Telas Principais** + **Painel Administrativo**:
 
 ---
 
-## 🔐 Painel Administrativo (`admin.html`)
+## 🔐 Painel Administrativo
 
-O painel administrativo é uma dashboard completa para gerenciar o site sem mexer no código.
+O painel administrativo está localizado na subpasta `/admin/` dentro deste mesmo repositório, gerando sua própria URL limpa e direta no GitHub Pages:
 
-### Acesso
-- **URL:** `admin.html` (link discreto no rodapé de todas as páginas)
+| Recurso | URL |
+|---------|-----|
+| **Site Principal** | `https://henriqueamaralborges-dotcom.github.io/WebCraft/` |
+| **Painel Admin** | `https://henriqueamaralborges-dotcom.github.io/WebCraft/admin/` |
+
 - **Credenciais padrão:** Usuário `admin` / Senha `webcraft2026`
-- ⚠️ **Altere a senha no primeiro acesso** nas configurações do painel.
+- ⚠️ **Altere a senha no primeiro acesso** no menu de Configurações do painel.
 
-### Funcionalidades
+### Integração Instantânea via localStorage
 
-#### 📊 Dashboard (Visão Geral)
-- Métricas resumidas: total de leads recebidos, receita estimada, ticket médio e leads pendentes.
-- Acesso rápido a todas as seções do painel.
-
-#### 💰 Editor de Preços
-- Editar os preços de todas as opções da calculadora (Estrutura Base, Módulos Adicionais e Planos de Manutenção).
-- Os preços alterados são salvos no `localStorage` e refletem automaticamente na calculadora do site.
-- Botão para restaurar preços padrão (valores originais).
-
-#### 👥 Leads / Orçamentos
-- Tabela completa com todos os pedidos enviados via WhatsApp.
-- Busca por nome, empresa ou WhatsApp do cliente.
-- Filtro por status: Novo, Em Andamento, Fechado, Cancelado.
-- Alterar status individual de cada lead.
-- Excluir leads individualmente.
-- **Exportar para CSV** — baixar planilha com todos os leads para análise.
-
-#### ⚙️ Configurações
-- **WhatsApp:** Alterar o número de WhatsApp usado nos envios via JavaScript.
-- **E-mail comercial:** Alterar o e-mail de contato.
-- **Alterar senha:** Trocar a senha de acesso ao painel.
-
-### Arquitetura Técnica
-
-O painel utiliza **localStorage** para persistência local:
+Como o site e o painel estão no mesmo repositório e sob o mesmo domínio, o **localStorage é compartilhado perfeitamente**:
 
 | Chave | Conteúdo |
 |-------|----------|
-| `webcraft_pricing` | Preços customizados (lidos pela calculadora) |
-| `webcraft_config` | Configurações gerais (WhatsApp, e-mail) |
-| `webcraft_admin_auth` | Credenciais do painel admin |
-| `webcraft_leads` | Lista de leads/orçamentos recebidos |
-
-> **Nota:** A integração entre o painel admin e o site funciona apenas quando ambos estão no **mesmo domínio/origem**. Ao abrir `index.html` localmente via `file://`, admin e site compartilham o mesmo `localStorage` automaticamente.
-
-> **Nota:** Os links de WhatsApp hardcoded no HTML (botão flutuante e links diretos no `href`) **não** são atualizados pelo painel. Apenas o número usado na geração da mensagem via JavaScript é atualizado. Para alterar o número nos links fixos, edite diretamente nos arquivos HTML.
+| `webcraft_pricing` | Preços customizados (lidos pela calculadora do site) |
+| `webcraft_config` | Configurações gerais (WhatsApp comercial, e-mail) |
+| `webcraft_admin_auth` | Credenciais de acesso ao painel |
+| `webcraft_leads` | Histórico de leads/orçamentos recebidos |
 
 ---
 
@@ -121,11 +96,12 @@ WebCraft-/
 ├── index.html          # SPA principal (3 telas integradas)
 ├── calculadora.html    # Página standalone da calculadora
 ├── duvidas.html        # Página standalone das dúvidas
-├── admin.html          # Painel administrativo
 ├── styles.css          # Estilos do site (design system completo)
-├── admin.css           # Estilos do painel admin (tema escuro)
 ├── app.js              # Lógica do site (calculadora, FAQ, navegação)
-├── admin.js            # Lógica do painel admin (auth, CRUD, export)
+├── admin/              # 🔐 Painel Administrativo com URL própria
+│   ├── index.html      # Tela de login e dashboard do admin
+│   ├── admin.css       # Estilos do painel admin (tema escuro)
+│   └── admin.js        # Lógica do admin (auth, preços, leads, exportação)
 ├── .gitignore          # Exclusões do Git
 └── README.md           # Esta documentação
 ```
