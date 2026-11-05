@@ -98,9 +98,14 @@
           <span>Tabela de Preços</span>
         </button>
 
+        <button type="button" class="nav-item-btn" data-tab="discounts">
+          <i class="fa-solid fa-percent"></i>
+          <span>Descontos & Promoções</span>
+        </button>
+
         <button type="button" class="nav-item-btn" data-tab="leads">
           <i class="fa-solid fa-users-line"></i>
-          <span>Orçamentos & Leads</span>
+          <span>Pessoas Cadastradas</span>
         </button>
 
         <button type="button" class="nav-item-btn" data-tab="settings">
@@ -209,13 +214,17 @@
                 <i class="fa-solid fa-tags"></i>
                 <span>Editar Preços dos Sites e Módulos</span>
               </button>
+              <button type="button" class="btn-admin-secondary" onclick="document.querySelector('[data-tab=\'discounts\']').click()">
+                <i class="fa-solid fa-percent" style="color: var(--amber-500);"></i>
+                <span>Configurar Descontos & Promoções</span>
+              </button>
               <button type="button" class="btn-admin-secondary" onclick="document.querySelector('[data-tab=\'leads\']').click()">
                 <i class="fa-solid fa-users"></i>
-                <span>Ver Lista de Contatos Recebidos</span>
+                <span>Ver Pessoas Cadastradas & Pedidos</span>
               </button>
               <button type="button" class="btn-admin-secondary" onclick="document.querySelector('[data-tab=\'settings\']').click()">
                 <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
-                <span>Alterar Telefone do WhatsApp de Destino</span>
+                <span>Alterar Telefone do WhatsApp</span>
               </button>
             </div>
           </div>
@@ -440,24 +449,123 @@
           </form>
         </section>
 
-        <!-- ABA 3: GESTÃO DE LEADS & ORÇAMENTOS RECEBIDOS -->
+        <!-- ABA 3: GESTÃO DE DESCONTOS E PROMOÇÕES -->
+        <section class="admin-view-panel" id="panel-discounts">
+          <div class="section-panel-header">
+            <div>
+              <h2>Gestão de Descontos & Promoções</h2>
+              <p>Configure descontos em porcentagem que serão aplicados instantaneamente na calculadora do site para todos os clientes.</p>
+            </div>
+          </div>
+
+          <form id="form-discounts">
+            <div class="admin-card">
+              <div class="discount-toggle-row">
+                <div class="discount-toggle-info">
+                  <h3 style="margin-bottom: 4px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-bullhorn" style="color: var(--amber-500);"></i>
+                    Status da Promoção no Site
+                  </h3>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">
+                    Ative para aplicar o desconto imediatamente e exibir o selo promocional na calculadora.
+                  </p>
+                </div>
+                <label class="admin-switch">
+                  <input type="checkbox" id="discount-active-toggle">
+                  <span class="admin-switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="pricing-edit-grid" style="margin-top: 24px;">
+                <div class="pricing-edit-item">
+                  <div class="price-item-meta">
+                    <strong>Desconto Geral na Criação (%)</strong>
+                    <span>Aplica sobre a Estrutura Base e Módulos adicionais</span>
+                  </div>
+                  <div class="price-input-control">
+                    <input type="number" id="discount-global-percent" class="admin-price-input" min="0" max="90" step="1" value="0" placeholder="0">
+                    <span class="currency-prefix">% OFF</span>
+                  </div>
+                </div>
+
+                <div class="pricing-edit-item">
+                  <div class="price-item-meta">
+                    <strong>Desconto na Manutenção Mensal (%)</strong>
+                    <span>Desconto concedido na mensalidade dos planos</span>
+                  </div>
+                  <div class="price-input-control">
+                    <input type="number" id="discount-maint-percent" class="admin-price-input" min="0" max="90" step="1" value="0" placeholder="0">
+                    <span class="currency-prefix">% OFF</span>
+                  </div>
+                </div>
+
+                <div class="pricing-edit-item" style="grid-column: 1 / -1;">
+                  <div class="price-item-meta">
+                    <strong>Texto do Selo / Destaque Promocional</strong>
+                    <span>Frase que aparecerá no topo do card de resumo da calculadora</span>
+                  </div>
+                  <div class="input-field-wrapper" style="margin-top: 8px;">
+                    <i class="fa-solid fa-tag input-field-icon" style="color: var(--amber-500);"></i>
+                    <input type="text" id="discount-promo-text" class="admin-input" placeholder="Ex: OFERTA ESPECIAL — 15% DE DESCONTO EM TODO O SITE!">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Prévia Dinâmica do Desconto -->
+              <div class="discount-preview-card" id="discount-preview-box">
+                <div class="preview-header">
+                  <i class="fa-solid fa-calculator" style="color: var(--cyan-500);"></i>
+                  <strong>Simulação de Impacto no Site:</strong>
+                </div>
+                <div class="preview-metrics-grid">
+                  <div class="preview-metric">
+                    <span>Site Express (De R$ 590,00)</span>
+                    <strong id="preview-express-price">Por R$ 590,00</strong>
+                  </div>
+                  <div class="preview-metric">
+                    <span>Site Multipáginas (De R$ 1.190,00)</span>
+                    <strong id="preview-multi-price">Por R$ 1.190,00</strong>
+                  </div>
+                  <div class="preview-metric">
+                    <span>Economia média para o cliente</span>
+                    <strong id="preview-savings-amount" style="color: var(--emerald-400);">R$ 0,00</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: center; justify-content: flex-end; margin-top: 10px;">
+              <button type="button" class="btn-admin-secondary" id="btn-reset-discounts">
+                <i class="fa-solid fa-ban"></i>
+                <span>Desativar Todos os Descontos</span>
+              </button>
+
+              <button type="submit" class="btn-admin-primary">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Salvar Regras de Desconto</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ABA 4: GESTÃO DE PESSOAS CADASTRADAS & PEDIDOS -->
         <section class="admin-view-panel" id="panel-leads">
           <div class="section-panel-header">
             <div>
-              <h2>Histórico de Orçamentos Recebidos</h2>
-              <p>Clientes que simularam projetos e clicaram no botão de enviar pedido via WhatsApp.</p>
+              <h2>Pessoas Cadastradas & Pedidos de Sites</h2>
+              <p>Acompanhe todos os clientes cadastrados com Nome, Telefone, CPF, CEP, Estrutura, Adições e Plano escolhidos.</p>
             </div>
           </div>
 
           <div class="leads-toolbar">
-            <div style="position: relative; width: 100%; max-width: 320px;">
+            <div style="position: relative; width: 100%; max-width: 380px;">
               <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-              <input type="text" id="search-leads" class="leads-search-input" placeholder="Buscar por cliente, empresa ou telefone...">
+              <input type="text" id="search-leads" class="leads-search-input" placeholder="Buscar por Nome, CPF, CEP, WhatsApp ou Empresa...">
             </div>
 
             <button type="button" class="btn-admin-secondary" id="btn-export-csv">
               <i class="fa-solid fa-file-csv"></i>
-              <span>Exportar para Planilha (CSV)</span>
+              <span>Exportar Planilha Completa (CSV)</span>
             </button>
           </div>
 
@@ -466,11 +574,13 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Cliente / Empresa</th>
+                  <th>Cliente & Empresa</th>
                   <th>WhatsApp</th>
-                  <th>Estrutura & Módulos</th>
+                  <th>CPF & CEP</th>
+                  <th>Estrutura & Adições</th>
+                  <th>Plano Escolhido</th>
                   <th>Investimento</th>
-                  <th>Status do Pedido</th>
+                  <th>Status</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -481,7 +591,7 @@
           </div>
         </section>
 
-        <!-- ABA 4: CONFIGURAÇÕES GERAIS E SEGURANÇA -->
+        <!-- ABA 5: CONFIGURAÇÕES GERAIS E SEGURANÇA -->
         <section class="admin-view-panel" id="panel-settings">
           <div class="section-panel-header">
             <div>
@@ -564,6 +674,100 @@
 
       </div>
     </main>
+  </div>
+
+  <!-- Modal com Ficha Detalhada do Cliente Cadastrado -->
+  <div class="admin-modal-backdrop" id="modal-lead-details">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <div>
+          <h3 id="modal-lead-name">Nome do Cliente</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);" id="modal-lead-date">Data do cadastro</span>
+        </div>
+        <button type="button" class="btn-modal-close" onclick="closeLeadModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="admin-modal-body">
+        <!-- Bloco 1: Dados Pessoais & Documentos -->
+        <div class="modal-info-section">
+          <h4><i class="fa-solid fa-id-card" style="color: var(--indigo-400);"></i> Dados do Cliente & Documentos</h4>
+          <div class="modal-info-grid">
+            <div class="modal-info-item">
+              <span>Nome Completo:</span>
+              <strong id="modal-field-name">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>Empresa / Projeto:</span>
+              <strong id="modal-field-company">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>WhatsApp / Telefone:</span>
+              <strong id="modal-field-phone">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>CPF Cadastrado:</span>
+              <strong id="modal-field-cpf" style="color: var(--cyan-500);">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>CEP Residencial / Comercial:</span>
+              <strong id="modal-field-cep" style="color: var(--cyan-500);">-</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 2: Pacote Escolhido (Estrutura, Adições e Plano) -->
+        <div class="modal-info-section">
+          <h4><i class="fa-solid fa-cube" style="color: var(--emerald-400);"></i> Configuração do Site Escolhida</h4>
+          <div class="modal-info-grid">
+            <div class="modal-info-item">
+              <span>Estrutura Base:</span>
+              <strong id="modal-field-base">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>Plano de Hospedagem & Suporte:</span>
+              <strong id="modal-field-plan" style="color: var(--emerald-400);">-</strong>
+            </div>
+            <div class="modal-info-item" style="grid-column: 1 / -1;">
+              <span>Módulos & Adições Solicitadas:</span>
+              <div id="modal-field-modules" class="modal-chips-wrapper">
+                <!-- Injetado dinamicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloco 3: Resumo Financeiro & Desconto -->
+        <div class="modal-info-section" style="background-color: rgba(99, 102, 241, 0.08); border-color: rgba(99, 102, 241, 0.25);">
+          <h4><i class="fa-solid fa-receipt" style="color: var(--indigo-400);"></i> Valores & Investimento</h4>
+          <div class="modal-info-grid">
+            <div class="modal-info-item">
+              <span>Investimento Inicial:</span>
+              <strong id="modal-field-total" style="font-size: 1.2rem; color: var(--emerald-400);">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>Desconto Aplicado:</span>
+              <strong id="modal-field-discount">-</strong>
+            </div>
+            <div class="modal-info-item">
+              <span>Mensalidade de Manutenção:</span>
+              <strong id="modal-field-maintenance">-</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-modal-footer">
+        <button type="button" class="btn-admin-secondary" onclick="closeLeadModal()">
+          <span>Fechar</span>
+        </button>
+        <a href="#" id="modal-btn-whatsapp" target="_blank" class="btn-admin-primary" style="background: #25D366;">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span>Iniciar Conversa no WhatsApp</span>
+        </a>
+      </div>
+    </div>
   </div>
 
   <div id="admin-toast" class="admin-toast"></div>

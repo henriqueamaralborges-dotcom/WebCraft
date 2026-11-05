@@ -101,6 +101,20 @@ function getActivePricing() {
   return DEFAULT_PRICING_DATA;
 }
 
+function getActiveDiscounts() {
+  const saved = localStorage.getItem('webcraft_discounts');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  return {
+    active: false,
+    globalPercent: 0,
+    promoBadge: "Promoção Especial",
+    promoText: "Desconto promocional aplicado na criação do site!",
+    maintPercent: 0
+  };
+}
+
 let CONFIG = getActiveConfig();
 let PRICING_DATA = getActivePricing();
 
@@ -114,7 +128,9 @@ const state = {
   selectedMaintenance: "pro", // Padrão recomendado
   clientName: "",
   clientCompany: "",
-  clientPhone: ""
+  clientPhone: "",
+  clientCpf: "",
+  clientCep: ""
 };
 
 // ==========================================================================
@@ -147,6 +163,34 @@ const maskPhone = (value) => {
   return cleanValue;
 };
 
+// Máscara dinâmica de CPF (000.000.000-00)
+const maskCPF = (value) => {
+  let cleanValue = value.replace(/\D/g, "");
+  if (cleanValue.length > 11) {
+    cleanValue = cleanValue.slice(0, 11);
+  }
+  if (cleanValue.length > 9) {
+    return cleanValue.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})$/, "$1.$2.$3-$4");
+  } else if (cleanValue.length > 6) {
+    return cleanValue.replace(/^(\d{3})(\d{3})(\d{1,3})$/, "$1.$2.$3");
+  } else if (cleanValue.length > 3) {
+    return cleanValue.replace(/^(\d{3})(\d{1,3})$/, "$1.$2");
+  }
+  return cleanValue;
+};
+
+// Máscara dinâmica de CEP (00000-000)
+const maskCEP = (value) => {
+  let cleanValue = value.replace(/\D/g, "");
+  if (cleanValue.length > 8) {
+    cleanValue = cleanValue.slice(0, 8);
+  }
+  if (cleanValue.length > 5) {
+    return cleanValue.replace(/^(\d{5})(\d{1,3})$/, "$1-$2");
+  }
+  return cleanValue;
+};
+
 // ==========================================================================
 // 4. Motor de Cálculo e Atualização da Interface
 // ==========================================================================
@@ -154,35 +198,60 @@ function calculateTotals() {
   // Atualiza com dados mais recentes do admin
   CONFIG = getActiveConfig();
   PRICING_DATA = getActivePricing();
+  const discounts = getActiveDiscounts();
 
   const baseInfo = PRICING_DATA.bases[state.selectedBase] || PRICING_DATA.bases["multi"];
-  let initialTotal = baseInfo.price;
+  let rawInitialTotal = baseInfo.price;
 
   // Soma de páginas extras
   const extraPagesTotal = state.extraPagesCount * (PRICING_DATA.extraPageUnitPrice || 150);
-  initialTotal += extraPagesTotal;
+  rawInitialTotal += extraPagesTotal;
 
   // Soma dos módulos opcionais selecionados
   state.selectedModules.forEach((modKey) => {
     if (PRICING_DATA.modules[modKey]) {
-      initialTotal += PRICING_DATA.modules[modKey].price;
+      rawInitialTotal += PRICING_DATA.modules[modKey].price;
     }
   });
 
+  // Cálculo de Descontos (se configurado e ativo no Admin)
+  let discountAmount = 0;
+  let discountPercent = 0;
+  let finalInitialTotal = rawInitialTotal;
+
+  if (discounts.active && discounts.globalPercent > 0) {
+    discountPercent = discounts.globalPercent;
+    discountAmount = (rawInitialTotal * discountPercent) / 100;
+    finalInitialTotal = Math.max(0, rawInitialTotal - discountAmount);
+  }
+
   // Plano de manutenção
   const maintInfo = PRICING_DATA.maintenance[state.selectedMaintenance] || PRICING_DATA.maintenance["pro"];
-  const maintenanceTotal = maintInfo.price;
+  let rawMaintenanceTotal = maintInfo.price;
+  let maintDiscountAmount = 0;
+  let finalMaintenanceTotal = rawMaintenanceTotal;
 
-  // Parcelamento
-  const installmentValue = initialTotal / CONFIG.maxInstallments;
+  if (discounts.active && discounts.maintPercent > 0) {
+    maintDiscountAmount = (rawMaintenanceTotal * discounts.maintPercent) / 100;
+    finalMaintenanceTotal = Math.max(0, rawMaintenanceTotal - maintDiscountAmount);
+  }
+
+  // Parcelamento sobre o valor final de criação
+  const installmentValue = finalInitialTotal / CONFIG.maxInstallments;
 
   return {
     baseInfo,
     extraPagesTotal,
-    initialTotal,
+    rawInitialTotal,
+    discountAmount,
+    discountPercent,
+    discounts,
+    initialTotal: finalInitialTotal,
     installmentValue,
     maintInfo,
-    maintenanceTotal
+    rawMaintenanceTotal,
+    maintDiscountAmount,
+    maintenanceTotal: finalMaintenanceTotal
   };
 }
 
@@ -278,6 +347,36 @@ function updateUI() {
   const totalDisplayEl = document.getElementById('summary-total-price');
   const installmentDisplayEl = document.getElementById('summary-installment-price');
   const maintDisplayEl = document.getElementById('summary-maint-price');
+
+  // Elementos de Desconto
+  const bannerEl = document.getElementById('summary-discount-banner');
+  const bannerTextEl = document.getElementById('summary-discount-text');
+  const originalPriceEl = document.getElementById('summary-original-price');
+  const discountTagEl = document.getElementById('summary-discount-tag');
+  const savingsBadgeEl = document.getElementById('summary-savings-badge');
+  const savingsValueEl = document.getElementById('summary-savings-value');
+
+  if (totals.discountAmount > 0) {
+    if (bannerEl) bannerEl.classList.add('active');
+    if (bannerTextEl) bannerTextEl.textContent = totals.discounts.promoText || `${totals.discountPercent}% de Desconto Especial Ativado!`;
+    if (originalPriceEl) {
+      originalPriceEl.classList.add('active');
+      originalPriceEl.textContent = formatCurrency(totals.rawInitialTotal);
+    }
+    if (discountTagEl) {
+      discountTagEl.classList.add('active');
+      discountTagEl.textContent = `-${totals.discountPercent}% OFF`;
+    }
+    if (savingsBadgeEl) {
+      savingsBadgeEl.classList.add('active');
+      if (savingsValueEl) savingsValueEl.textContent = formatCurrency(totals.discountAmount);
+    }
+  } else {
+    if (bannerEl) bannerEl.classList.remove('active');
+    if (originalPriceEl) originalPriceEl.classList.remove('active');
+    if (discountTagEl) discountTagEl.classList.remove('active');
+    if (savingsBadgeEl) savingsBadgeEl.classList.remove('active');
+  }
 
   if (totalDisplayEl) {
     totalDisplayEl.textContent = formatCurrency(totals.initialTotal);
@@ -473,6 +572,8 @@ function setupLeadForm() {
   const inputName = document.getElementById('lead-name');
   const inputCompany = document.getElementById('lead-company');
   const inputPhone = document.getElementById('lead-phone');
+  const inputCpf = document.getElementById('lead-cpf');
+  const inputCep = document.getElementById('lead-cep');
   const btnSendWhatsApp = document.getElementById('btn-send-whatsapp');
   const btnCopySummary = document.getElementById('btn-copy-summary');
 
@@ -483,6 +584,26 @@ function setupLeadForm() {
     inputPhone.addEventListener('input', (e) => {
       e.target.value = maskPhone(e.target.value);
       if (e.target.value.replace(/\D/g, '').length >= 10) {
+        e.target.classList.remove('error');
+      }
+    });
+  }
+
+  // Máscara e validação em tempo real do CPF
+  if (inputCpf) {
+    inputCpf.addEventListener('input', (e) => {
+      e.target.value = maskCPF(e.target.value);
+      if (e.target.value.replace(/\D/g, '').length === 11) {
+        e.target.classList.remove('error');
+      }
+    });
+  }
+
+  // Máscara e validação em tempo real do CEP
+  if (inputCep) {
+    inputCep.addEventListener('input', (e) => {
+      e.target.value = maskCEP(e.target.value);
+      if (e.target.value.replace(/\D/g, '').length === 8) {
         e.target.classList.remove('error');
       }
     });
@@ -504,6 +625,8 @@ function setupLeadForm() {
       const nameVal = inputName ? inputName.value.trim() : "";
       const companyVal = inputCompany ? inputCompany.value.trim() : "";
       const phoneVal = inputPhone ? inputPhone.value.trim() : "";
+      const cpfVal = inputCpf ? inputCpf.value.trim() : "";
+      const cepVal = inputCep ? inputCep.value.trim() : "";
 
       let hasError = false;
 
@@ -518,30 +641,51 @@ function setupLeadForm() {
         hasError = true;
       }
 
+      const rawCpf = cpfVal.replace(/\D/g, '');
+      if (!rawCpf || rawCpf.length !== 11) {
+        if (inputCpf) inputCpf.classList.add('error');
+        hasError = true;
+      }
+
+      const rawCep = cepVal.replace(/\D/g, '');
+      if (!rawCep || rawCep.length !== 8) {
+        if (inputCep) inputCep.classList.add('error');
+        hasError = true;
+      }
+
       if (hasError) {
-        showToast("⚠️ Por favor, informe seu Nome e WhatsApp para contato.", "warning");
+        showToast("⚠️ Por favor, preencha Nome, WhatsApp, CPF e CEP corretamente.", "warning");
         if (inputName && !nameVal) inputName.focus();
-        else if (inputPhone) inputPhone.focus();
+        else if (inputPhone && !rawPhone) inputPhone.focus();
+        else if (inputCpf && rawCpf.length !== 11) inputCpf.focus();
+        else if (inputCep && rawCep.length !== 8) inputCep.focus();
         return;
       }
 
       state.clientName = nameVal;
       state.clientCompany = companyVal || "Não informada";
       state.clientPhone = phoneVal;
+      state.clientCpf = cpfVal;
+      state.clientCep = cepVal;
 
       const totals = calculateTotals();
 
-      // Salva o lead no localStorage para o Painel Admin WebCraft
+      // Salva o lead com todos os dados no localStorage para o Painel Admin WebCraft
       saveLeadToStorage({
         clientName: nameVal,
         clientCompany: companyVal || "Não informada",
         clientPhone: phoneVal,
+        clientCpf: cpfVal,
+        clientCep: cepVal,
         baseName: totals.baseInfo.name,
         basePrice: totals.baseInfo.price,
         modules: Array.from(state.selectedModules).map(k => PRICING_DATA.modules[k]?.name).filter(Boolean),
         extraPages: state.extraPagesCount,
         maintenanceName: totals.maintInfo.name,
         maintenancePrice: totals.maintenanceTotal,
+        subtotal: totals.rawInitialTotal,
+        discountPercent: totals.discountPercent,
+        discountAmount: totals.discountAmount,
         total: totals.initialTotal
       });
 
@@ -587,7 +731,14 @@ function generateWhatsAppMessage() {
   if (state.clientCompany && state.clientCompany !== "Não informada") {
     msg += `🏢 *Empresa:* ${state.clientCompany}\n`;
   }
-  msg += `📱 *WhatsApp:* ${state.clientPhone || 'Não informado'}\n\n`;
+  msg += `📱 *WhatsApp:* ${state.clientPhone || 'Não informado'}\n`;
+  if (state.clientCpf) {
+    msg += `📄 *CPF:* ${state.clientCpf}\n`;
+  }
+  if (state.clientCep) {
+    msg += `📍 *CEP:* ${state.clientCep}\n`;
+  }
+  msg += `\n`;
 
   // Estrutura Base
   msg += `📦 *Estrutura Base Escolhida:*\n`;
@@ -623,11 +774,18 @@ function generateWhatsAppMessage() {
 
   // Resumo Financeiro
   msg += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  msg += `💰 *INVESTIMENTO INICIAL:* *${formatCurrency(totals.initialTotal)}*\n`;
+  if (totals.discountAmount > 0) {
+    msg += `💵 *Subtotal:* ${formatCurrency(totals.rawInitialTotal)}\n`;
+    msg += `🏷️ *Desconto Promocional (-${totals.discountPercent}%):* -${formatCurrency(totals.discountAmount)}\n`;
+    msg += `💰 *INVESTIMENTO FINAL:* *${formatCurrency(totals.initialTotal)}*\n`;
+  } else {
+    msg += `💰 *INVESTIMENTO INICIAL:* *${formatCurrency(totals.initialTotal)}*\n`;
+  }
+
   msg += `💳 *Parcelamento:* Em até ${CONFIG.maxInstallments}x de *${formatCurrency(totals.installmentValue)}* no cartão\n`;
   msg += `🔄 *Mensalidade:* *${formatCurrency(totals.maintenanceTotal)}/mês* (após entrega)\n\n`;
 
-  msg += `Olá equipe WebCraft! Acabei de simular este orçamento pelo site e gostaria de tirar dúvidas e dar início ao meu projeto. Aguardo o contato!`;
+  msg += `Olá equipe WebCraft! Acabei de simular este orçamento pelo site com meus dados e gostaria de tirar dúvidas e dar início ao meu projeto. Aguardo o contato!`;
 
   return msg;
 }

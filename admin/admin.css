@@ -848,3 +848,247 @@ button {
     padding: 20px;
   }
 }
+
+/* --------------------------------------------------------------------------
+   8. Controles de Desconto & Modal de Clientes
+   -------------------------------------------------------------------------- */
+.discount-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-switch {
+  position: relative;
+  display: inline-block;
+  width: 54px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.admin-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.admin-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--admin-surface-hover);
+  transition: 0.3s;
+  border-radius: 34px;
+  border: 1px solid var(--admin-border);
+}
+
+.admin-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.admin-switch input:checked + .admin-switch-slider {
+  background-color: var(--emerald-500);
+}
+
+.admin-switch input:checked + .admin-switch-slider:before {
+  transform: translateX(24px);
+}
+
+.discount-preview-card {
+  margin-top: 24px;
+  background-color: var(--admin-surface-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.preview-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.preview-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: var(--admin-bg);
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--admin-border);
+}
+
+.preview-metric span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.preview-metric strong {
+  font-size: 1.05rem;
+  font-family: var(--font-heading);
+  color: var(--text-white);
+}
+
+/* Chips de Módulos na Tabela */
+.module-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  background-color: rgba(99, 102, 241, 0.15);
+  color: var(--indigo-400);
+  margin: 2px;
+}
+
+.module-chip.extra-page {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--amber-500);
+}
+
+/* Modal de Ficha Completa do Cliente */
+.admin-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.admin-modal-backdrop.show {
+  display: flex;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.admin-modal-card {
+  width: 100%;
+  max-width: 680px;
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.admin-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-modal-header h3 {
+  font-size: 1.25rem;
+  font-family: var(--font-heading);
+}
+
+.btn-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--admin-surface-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.btn-modal-close:hover {
+  background-color: var(--admin-surface-hover);
+  color: #fff;
+}
+
+.admin-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal-info-section {
+  background-color: var(--admin-surface-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+
+.modal-info-section h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 20px;
+}
+
+.modal-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modal-info-item span {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+.modal-info-item strong {
+  font-size: 0.95rem;
+  color: var(--text-white);
+  word-break: break-word;
+}
+
+.modal-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.admin-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}

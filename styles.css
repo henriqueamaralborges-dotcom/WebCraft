@@ -1501,6 +1501,88 @@ ul {
   position: relative;
 }
 
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Badges e Avisos de Desconto na Calculadora */
+.discount-banner-alert {
+  display: none;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  color: #DC2626;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  animation: pulseSlow 2s infinite ease-in-out;
+}
+
+.discount-banner-alert.active {
+  display: flex;
+}
+
+.price-original-struck {
+  display: none;
+  text-decoration: line-through;
+  color: #9CA3AF;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.price-original-struck.active {
+  display: inline-block;
+}
+
+.price-discount-tag {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  background-color: #EF4444;
+  color: #FFFFFF;
+  font-size: 0.725rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.price-discount-tag.active {
+  display: inline-flex;
+}
+
+.price-savings-badge {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: #059669;
+  background-color: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-top: 6px;
+}
+
+.price-savings-badge.active {
+  display: inline-flex;
+}
+
 .form-input {
   width: 100%;
   padding: 11px 14px;

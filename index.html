@@ -678,11 +678,27 @@
                   </div>
                 </div>
 
+                <!-- Aviso de Promoção Ativa (se configurada no Admin) -->
+                <div class="discount-banner-alert" id="summary-discount-banner">
+                  <i class="fa-solid fa-fire"></i>
+                  <span id="summary-discount-text">Promoção Ativa! Desconto especial aplicado</span>
+                </div>
+
                 <!-- Bloco de Preço e Totais -->
                 <div class="summary-pricing-block">
                   <div class="price-row-initial">
                     <span class="price-row-label">Investimento de Criação</span>
-                    <div class="price-value-big" id="summary-total-price">R$ 1.190,00</div>
+                    <div style="display: flex; align-items: baseline; flex-wrap: wrap;">
+                      <span class="price-original-struck" id="summary-original-price">R$ 1.190,00</span>
+                      <div class="price-value-big" id="summary-total-price">R$ 1.190,00</div>
+                      <span class="price-discount-tag" id="summary-discount-tag">-15% OFF</span>
+                    </div>
+
+                    <div class="price-savings-badge" id="summary-savings-badge">
+                      <i class="fa-solid fa-piggy-bank"></i>
+                      <span>Você economiza <strong id="summary-savings-value">R$ 0,00</strong></span>
+                    </div>
+
                     <div class="price-installments-badge">
                       <i class="fa-regular fa-credit-card"></i>
                       <span>ou em até 12x de <strong id="summary-installment-price">R$ 99,17</strong> no cartão</span>
@@ -701,16 +717,29 @@
                 <form class="summary-form" id="lead-form" onsubmit="return false;">
                   <div class="form-group">
                     <input type="text" id="lead-name" class="form-input" placeholder="Seu Nome Completo *" required>
-                    <span class="form-error-msg">Por favor, informe seu nome.</span>
+                    <span class="form-error-msg">Por favor, informe seu nome completo.</span>
                   </div>
 
                   <div class="form-group">
-                    <input type="text" id="lead-company" class="form-input" placeholder="Nome da Sua Empresa / Projeto">
-                  </div>
-
-                  <div class="form-group">
-                    <input type="tel" id="lead-phone" class="form-input" placeholder="Seu WhatsApp (ex: 11 99999-9999) *" required>
+                    <input type="tel" id="lead-phone" class="form-input" placeholder="Seu WhatsApp com DDD (ex: 11 99999-9999) *" required>
                     <span class="form-error-msg">Informe um WhatsApp válido com DDD.</span>
+                  </div>
+
+                  <!-- Campos de CPF e CEP para cadastro e orçamento -->
+                  <div class="form-row-2">
+                    <div class="form-group">
+                      <input type="text" id="lead-cpf" class="form-input" placeholder="Seu CPF *" maxlength="14" required>
+                      <span class="form-error-msg">Informe um CPF válido.</span>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" id="lead-cep" class="form-input" placeholder="Seu CEP *" maxlength="9" required>
+                      <span class="form-error-msg">Informe um CEP válido.</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" id="lead-company" class="form-input" placeholder="Nome da Sua Empresa / Projeto (Opcional)">
                   </div>
 
                   <!-- Botão CTA Principal -->

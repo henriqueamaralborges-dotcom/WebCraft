@@ -74,9 +74,10 @@ Como o site e o painel estão no mesmo repositório e sob o mesmo domínio, o **
 | Chave | Conteúdo |
 |-------|----------|
 | `webcraft_pricing` | Preços customizados (lidos pela calculadora do site) |
+| `webcraft_discounts` | Regras de descontos ativos (% na criação, manutenção e texto promocional) |
 | `webcraft_config` | Configurações gerais (WhatsApp comercial, e-mail) |
 | `webcraft_admin_auth` | Credenciais de acesso ao painel |
-| `webcraft_leads` | Histórico de leads/orçamentos recebidos |
+| `webcraft_leads` | Histórico de pessoas cadastradas (Nome, WhatsApp, CPF, CEP, Estrutura, Adições e Plano) |
 
 ---
 
