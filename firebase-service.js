@@ -12,13 +12,14 @@
  */
 
 // 1. Configuração padrão do Firebase (Pode ser preenchida aqui ou configurada pelo Painel Admin)
+// ⚠️ Preencha apiKey e appId com os valores do Firebase Console → Configurações do Projeto → Seus apps
 const DEFAULT_FIREBASE_CONFIG = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "",           // ← Obtenha no Firebase Console → Configurações do projeto → Seus apps
+  authDomain: "webcraft12348.firebaseapp.com",
+  projectId: "webcraft12348",
+  storageBucket: "webcraft12348.appspot.com",
+  messagingSenderId: "537100728835",
+  appId: ""             // ← Obtenha no Firebase Console → Configurações do projeto → Seus apps
 };
 
 let firebaseApp = null;

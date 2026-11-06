@@ -1072,6 +1072,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateUI();
     });
   }
-});
+
   updateUI();
 });
